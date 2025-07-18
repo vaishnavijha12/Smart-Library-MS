@@ -12,7 +12,10 @@ import {
   SelectItem
 } from "@/components/ui/select"
 
+import { useRouter } from 'next/navigation'
+
 export default function RegisterForm() {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,10 +23,31 @@ export default function RegisterForm() {
     role: 'USER',
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Form Data:', formData)
-    // Call your backend here
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      console.log(res)
+      if (!res.ok) {
+        throw new Error('Failed to register');
+      }
+
+      const data = await res.json();
+      if(data.user.role === "USER"){
+        router.push('/user/dashboard')
+      }
+      else{
+        router.push('/librarian/dashboard')
+      }
+      
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
   return (

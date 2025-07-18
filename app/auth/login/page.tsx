@@ -1,6 +1,6 @@
 import LoginForm from "@/components/auth/LoginForm"
 
-export default function Register(){
+export default function Login(){
     return(
         <LoginForm />
     )

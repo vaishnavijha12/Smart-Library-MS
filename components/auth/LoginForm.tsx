@@ -5,17 +5,39 @@ import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useRouter } from 'next/navigation'
 
 export default function LoginForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Login Data:', formData)
-    // Replace with your actual login logic
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      console.log(res)
+      if (!res.ok) {
+        throw new Error('Failed to register');
+      }
+
+      const data = await res.json();
+      if(data.user.role === "USER"){
+        router.push('/user/dashboard')
+      }
+      else{
+        router.push('/librarian/dashboard')
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
   return (
