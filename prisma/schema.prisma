@@ -1,0 +1,85 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  password     String
+  name         String
+  studentId    String?   @unique
+  role         Role      @default(USER)
+  phone        String?
+  address      String?
+  profilePic   String?
+  fine         Float     @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  bookIssues   BookIssue[]
+  
+  @@map("users")
+}
+
+model Book {
+  id          String       @id @default(cuid())
+  title       String
+  author      String
+  isbn        String       @unique
+  category    String
+  description String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  copies      BookCopy[]
+  
+  @@map("books")
+}
+
+model BookCopy {
+  id         String     @id @default(cuid())
+  bookId     String
+  status     CopyStatus @default(AVAILABLE)
+  book       Book       @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  bookIssues BookIssue[]
+
+  @@map("book_copies")
+}
+
+model BookIssue {
+  id           String       @id @default(cuid())
+  userId       String
+  bookCopyId   String
+  issueDate    DateTime     @default(now())
+  dueDate      DateTime
+  returnDate   DateTime?
+  fine         Float        @default(0)
+  status       IssueStatus  @default(ISSUED)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookCopy     BookCopy     @relation(fields: [bookCopyId], references: [id], onDelete: Cascade)
+  
+  @@map("book_issues")
+}
+
+enum CopyStatus {
+  AVAILABLE
+  ISSUED
+}
+
+enum IssueStatus {
+  ISSUED
+  RETURNED
+  OVERDUE
+}
+
+enum Role {
+  USER
+  LIBRARIAN
+}
+
+
+
