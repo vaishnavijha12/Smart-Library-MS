@@ -3,7 +3,7 @@ import {BookOpen} from 'lucide-react'
 export default function NavbarSection(){
     return(
         <nav className="bg-neutral-900 sticky top-0 z-50 backdrop-blur-lg bg-opacity-95">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div className="container mx-auto px-6 py-6 flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <BookOpen className="text-neutral-300 w-8 h-8 hover:scale-110 transition-transform duration-300" />
             <Link
