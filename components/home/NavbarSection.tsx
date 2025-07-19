@@ -16,6 +16,7 @@ interface User {
 export default function NavbarSection(){
     const router = useRouter();
     const [user,setUser] = useState<User>(null);
+    const [isProfile,setIsProfile] = useState<boolean>(false);
 
     useEffect(() => {
       fetchToken()
@@ -46,6 +47,10 @@ export default function NavbarSection(){
         console.log(error);
       }
     }
+    const HandleNavClick = () => {
+      setIsProfile(!isProfile)
+    }
+
     return(
         <nav className="bg-neutral-900 sticky top-0 z-50 backdrop-blur-lg bg-opacity-95">
         <div className="container mx-auto px-6 py-6 flex justify-between items-center">
@@ -75,13 +80,50 @@ export default function NavbarSection(){
           </div>)
           :
           (
-            <div className="space-x-4">
-            <Link
-              href="/"
-              className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
-            >
-              Profile
-            </Link>
+          <div className="space-x-4">
+            {(user.role === "USER") ?
+              ( (!isProfile) ?
+                (
+                  <Link
+                    href="/user/profile"
+                    className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+                    onClick={HandleNavClick}
+                  >
+                    Profile
+                  </Link>
+                ):
+                (
+                  <Link
+                    href="/user/dashboard"
+                    className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+                    onClick={HandleNavClick}
+                  >
+                    Home
+                  </Link>
+                )
+              ) :
+              ( (!isProfile)?
+                (
+                  <Link
+                    href="/librarian/profile"
+                    className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+                    onClick={HandleNavClick}
+                  >
+                    Profile
+                  </Link>
+                ) :
+                (
+                  <Link
+                    href="/librarian/dashboard"
+                    className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+                    onClick={HandleNavClick}
+                  >
+                    Home
+                  </Link>
+                )
+              )
+            }
+            
             <Button
               onClick={logoutHandler}
               className="text-white px-5 py-5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
