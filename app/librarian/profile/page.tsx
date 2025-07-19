@@ -6,8 +6,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from 'sonner'
-import { User, Mail, Phone, MapPin, Shield } from 'lucide-react'
+import { User, Mail, Phone, MapPin, Shield, Camera } from 'lucide-react'
 import { ShimmerPostItem } from "react-shimmer-effects";
+
 interface UserProfile {
   id: string
   name: string
@@ -15,6 +16,7 @@ interface UserProfile {
   phone?: string
   address?: string
   role: string
+  profilePic?: string
 }
 
 export default function LibrarianProfile() {
@@ -22,7 +24,8 @@ export default function LibrarianProfile() {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    address: ''
+    address: '',
+    profilePic: '',
   })
   const [loading, setLoading] = useState(false)
 
@@ -39,7 +42,8 @@ export default function LibrarianProfile() {
         setFormData({
           name: data.user.name || '',
           phone: data.user.phone || '',
-          address: data.user.address || ''
+          address: data.user.address || '',
+          profilePic: data.user.profilePic || '',
         })
       }
     } catch (error) {
@@ -72,36 +76,79 @@ export default function LibrarianProfile() {
     }
   }
 
-  if (!user) {
-    return <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <ShimmerPostItem card title text cta />
-        <ShimmerPostItem card title text cta />
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      // Example: convert to base64 preview or use your upload logic
+      const reader = new FileReader()
+      reader.onload = () => {
+        setFormData({ ...formData, profilePic: reader.result as string })
+      }
+      reader.readAsDataURL(e.target.files[0])
+    }
+  }
 
-    </div>
+  if (!user) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <ShimmerPostItem card title text cta />
+        <ShimmerPostItem card title text cta />
+      </div>
+    )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">      
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Librarian Profile</h1>
-          <p className="text-gray-600">Manage your personal information and account settings</p>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="mb-10">
+          <h1 className="text-3xl font-bold text-neutral-900">Librarian Profile</h1>
+          <p className="text-neutral-600">Manage your personal information and account settings</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Profile Information */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          {/* Profile Form */}
           <div className="lg:col-span-2">
             <Card>
               <CardHeader>
                 <CardTitle>Personal Information</CardTitle>
-                <CardDescription>Update your personal details</CardDescription>
+                <CardDescription>Update your profile and contact details</CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Profile Picture */}
+                  <div className="flex items-center space-x-6">
+                    <div className="w-20 h-20 rounded-full bg-neutral-200 overflow-hidden">
+                      {formData.profilePic ? (
+                        <img
+                          src={formData.profilePic}
+                          alt="Profile"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <User className="w-full h-full p-4 text-neutral-500" />
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="profilePic" className="block mb-1 text-sm font-medium">
+                        Profile Picture
+                      </Label>
+                      <div className="flex items-center gap-2">
+                        <Input
+                          id="profilePic"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageChange}
+                          className="w-full"
+                        />
+                        <Camera className="h-5 w-5 text-neutral-500" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Name */}
                   <div>
-                    <Label className="mb-2" htmlFor="name">Full Name</Label>
+                    <Label htmlFor="name" className="mb-2 block">Full Name</Label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 h-4 w-4" />
                       <Input
                         id="name"
                         value={formData.name}
@@ -111,24 +158,26 @@ export default function LibrarianProfile() {
                       />
                     </div>
                   </div>
-                  
+
+                  {/* Email */}
                   <div>
-                    <Label className="mb-2" htmlFor="email">Email</Label>
+                    <Label htmlFor="email" className="mb-2 block">Email</Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 h-4 w-4" />
                       <Input
                         id="email"
                         value={user.email}
-                        className="pl-10"
                         disabled
+                        className="pl-10 bg-neutral-100 cursor-not-allowed"
                       />
                     </div>
                   </div>
-                  
+
+                  {/* Phone */}
                   <div>
-                    <Label className="mb-2" htmlFor="phone">Phone Number</Label>
+                    <Label htmlFor="phone" className="mb-2 block">Phone Number</Label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 h-4 w-4" />
                       <Input
                         id="phone"
                         value={formData.phone}
@@ -138,11 +187,12 @@ export default function LibrarianProfile() {
                       />
                     </div>
                   </div>
-                  
+
+                  {/* Address */}
                   <div>
-                    <Label className="mb-2" htmlFor="address">Address</Label>
+                    <Label htmlFor="address" className="mb-2 block">Address</Label>
                     <div className="relative">
-                      <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 h-4 w-4" />
                       <Input
                         id="address"
                         value={formData.address}
@@ -152,8 +202,8 @@ export default function LibrarianProfile() {
                       />
                     </div>
                   </div>
-                  
-                  <Button className="bg-zinc-800 text-white" type="submit" disabled={loading}>
+
+                  <Button className="w-full bg-neutral-900 text-white" type="submit" disabled={loading}>
                     {loading ? 'Updating...' : 'Update Profile'}
                   </Button>
                 </form>
@@ -172,15 +222,14 @@ export default function LibrarianProfile() {
                   <Shield className="h-4 w-4 text-blue-500" />
                   <div>
                     <p className="text-sm font-medium">Role</p>
-                    <p className="text-sm text-gray-600">Librarian</p>
+                    <p className="text-sm text-neutral-700">{user.role}</p>
                   </div>
                 </div>
-                
                 <div className="flex items-center gap-3">
-                  <Mail className="h-4 w-4 text-gray-500" />
+                  <Mail className="h-4 w-4 text-neutral-500" />
                   <div>
                     <p className="text-sm font-medium">Email</p>
-                    <p className="text-sm text-gray-600">{user.email}</p>
+                    <p className="text-sm text-neutral-700">{user.email}</p>
                   </div>
                 </div>
               </CardContent>

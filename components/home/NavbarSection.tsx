@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import {BookOpen} from 'lucide-react'
+import {BookOpen,User} from 'lucide-react'
 import {useEffect,useState} from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -80,7 +80,11 @@ export default function NavbarSection(){
           </div>)
           :
           (
-          <div className="space-x-4">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 text-white">
+              <User className="h-4 w-4" />
+              <span className="text-sm font-medium">{user.name}</span>
+            </div>
             {(user.role === "USER") ?
               ( (!isProfile) ?
                 (
@@ -126,7 +130,7 @@ export default function NavbarSection(){
             
             <Button
               onClick={logoutHandler}
-              className="text-white px-5 py-5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+              className="text-white px-5.5 py-5.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
             >
               Logout
             </Button>
