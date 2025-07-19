@@ -71,6 +71,7 @@ export default function UserProfile() {
       }
     } catch (error) {
       toast.error('An error occurred while updating profile')
+      console.log(error)
     } finally {
       setLoading(false)
     }

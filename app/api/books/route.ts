@@ -28,6 +28,7 @@ async function postHandler(request: NextRequest) {
   }
 
   try {
+    // 1. Create the book
     const book = await db.book.create({
       data: {
         title,
@@ -35,13 +36,24 @@ async function postHandler(request: NextRequest) {
         isbn,
         category,
         description,
-        quantity: parseInt(quantity) || 1,
-        available: parseInt(quantity) || 1
-      }
+      },
+    })
+
+    // 2. Create the copies
+    const numCopies = parseInt(quantity) || 1
+
+    const copiesData = Array.from({ length: numCopies }).map((_, i) => ({
+      id: `${isbn}-${i + 1}`,
+      bookId: book.id,
+    }))
+
+    await db.bookCopy.createMany({
+      data: copiesData,
     })
 
     return Response.json({ book })
   } catch (error: any) {
+    console.error(error)
     if (error.code === 'P2002') {
       return Response.json({ error: 'Book with this ISBN already exists' }, { status: 400 })
     }

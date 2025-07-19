@@ -6,7 +6,7 @@ export default function QuoteSection(){
         <div className="container mx-auto px-6 text-center relative">
           <Quote className="text-neutral-400 w-12 h-12 mb-6" />
           <blockquote className="text-3xl md:text-4xl italic font-light mb-8 leading-relaxed">
-            "A room without books is like a body without a soul."
+            A room without books is like a body without a soul.
           </blockquote>
           <div className="flex items-center justify-center space-x-4">
             <div className="w-12 h-0.5 bg-neutral-500"></div>
