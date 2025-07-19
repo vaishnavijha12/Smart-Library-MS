@@ -119,19 +119,19 @@ export default function QRGenerator() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Generator Form */}
-          <Card>
+          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl p-6">
             <CardHeader>
               <CardTitle>Generate QR Code</CardTitle>
               <CardDescription>Create QR codes for quick scanning operations</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="type">QR Code Type</Label>
+                <Label className="mb-2" htmlFor="type">QR Code Type</Label>
                 <Select value={qrType} onValueChange={(value: 'book' | 'user') => setQrType(value)}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent  className="bg-white border border-gray-200 shadow-lg rounded-md p-2">
                     <SelectItem value="book">Book</SelectItem>
                     <SelectItem value="user">User</SelectItem>
                   </SelectContent>
@@ -140,12 +140,12 @@ export default function QRGenerator() {
 
               {qrType === 'book' ? (
                 <div>
-                  <Label htmlFor="book">Select Book</Label>
+                  <Label className="mb-2" htmlFor="book">Select Book</Label>
                   <Select value={selectedId} onValueChange={setSelectedId}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Choose a book" />
+                      <SelectValue className="" placeholder="Choose a book" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white border border-gray-200 shadow-lg rounded-md p-2">
                       {books.map((book) => (
                         <SelectItem key={book.id} value={book.id}>
                           {book.title} by {book.author}
@@ -156,12 +156,12 @@ export default function QRGenerator() {
                 </div>
               ) : (
                 <div>
-                  <Label htmlFor="user">Select User</Label>
+                  <Label className="mb-2" htmlFor="user">Select User</Label>
                   <Select value={selectedId} onValueChange={setSelectedId}>
                     <SelectTrigger>
                       <SelectValue placeholder="Choose a user" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white border border-gray-200 shadow-lg rounded-md p-2">
                       {users.map((user) => (
                         <SelectItem key={user.id} value={user.id}>
                           {user.name} ({user.studentId})
@@ -172,7 +172,7 @@ export default function QRGenerator() {
                 </div>
               )}
 
-              <Button onClick={generateQRCode} disabled={loading || !selectedId} className="w-full">
+              <Button onClick={generateQRCode} disabled={loading || !selectedId} className="w-full bg-zinc-800 text-white">
                 {loading ? 'Generating...' : (
                   <>
                     <QrCode className="h-4 w-4 mr-2" />
@@ -184,7 +184,7 @@ export default function QRGenerator() {
           </Card>
 
           {/* QR Code Display */}
-          <Card>
+          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl p-6">
             <CardHeader>
               <CardTitle>Generated QR Code</CardTitle>
               <CardDescription>
@@ -217,7 +217,7 @@ export default function QRGenerator() {
         </div>
 
         {/* Usage Instructions */}
-        <Card className="mt-8">
+        <Card className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 mt-8">
           <CardHeader>
             <CardTitle>Usage Instructions</CardTitle>
           </CardHeader>

@@ -96,7 +96,7 @@ export default function MembersManagement() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                ${users.reduce((sum, user) => sum + user.fine, 0).toFixed(2)}
+                ₹{users.reduce((sum, user) => sum + user.fine, 0).toFixed(2)}
               </div>
             </CardContent>
           </Card>

@@ -98,7 +98,6 @@ export default function UserProfile() {
             <p className="text-gray-600">Manage your personal information and account settings</p>
           </div>
 
-          {/* ✅ Profile picture section */}
           <div className="flex flex-col items-center mt-6 md:mt-0">
             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-200">
               {user.imageUrl ? (

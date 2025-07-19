@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Book, User, Clock, DollarSign } from 'lucide-react'
+import { Book, User, Clock, IndianRupee } from 'lucide-react'
 
 interface BookIssue {
   id: string
@@ -83,10 +83,10 @@ export default function IssueReports() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Pending Fines</CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
+              <IndianRupee className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${totalFines.toFixed(2)}</div>
+              <div className="text-2xl font-bold">₹{totalFines.toFixed(2)}</div>
             </CardContent>
           </Card>
           
@@ -134,7 +134,7 @@ export default function IssueReports() {
                         <div className="flex items-center gap-2 mt-2">
                           <span className="text-xs text-gray-500">Total Fine:</span>
                           <Badge variant={issue.user.fine > 0 ? 'destructive' : 'default'}>
-                            ${issue.user.fine.toFixed(2)}
+                            ₹{issue.user.fine.toFixed(2)}
                           </Badge>
                         </div>
                       </div>
