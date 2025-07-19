@@ -10,8 +10,10 @@ import { QRScanner } from '@/components/librarian/qr-scanner'
 import { toast } from 'sonner'
 import { Book, Users, QrCode, Plus, ArrowLeftRight } from 'lucide-react'
 import { parseQRData } from '@/lib/qr-utils'
+import { useRouter } from 'next/navigation'
 
 export default function LibrarianDashboard() {
+    const router = useRouter()
   const [issueForm, setIssueForm] = useState({ studentId: '', bookId: '' })
   const [returnForm, setReturnForm] = useState({ bookId: '' })
   const [scanMode, setScanMode] = useState<'none' | 'issue' | 'return'>('none')
@@ -167,19 +169,19 @@ export default function LibrarianDashboard() {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Button onClick={() => window.location.href = '/librarian/books'} className="h-18 flex flex-col bg-zinc-800 text-white">
+          <Button onClick={() => router.push('/librarian/books')} className="h-18 flex flex-col bg-zinc-800 text-white">
             <Book className="h-6 w-6 mb-1" />
             Manage Books
           </Button>
-          <Button onClick={() => window.location.href = '/librarian/members'} className="h-18 flex flex-col bg-zinc-800 text-white">
+          <Button onClick={() => router.push('/librarian/members')} className="h-18 flex flex-col bg-zinc-800 text-white">
             <Users className="h-6 w-6 mb-1" />
             Library Members
           </Button>
-          <Button onClick={() => window.location.href = '/librarian/reports'} className="h-18 flex flex-col bg-zinc-800 text-white">
+          <Button onClick={() => router.push('/librarian/reports')} className="h-18 flex flex-col bg-zinc-800 text-white">
             <ArrowLeftRight className="h-6 w-6 mb-1" />
             Issue Reports
           </Button>
-          <Button onClick={() => window.location.href = '/librarian/qr-generator'} className="h-18 flex flex-col bg-zinc-800 text-white">
+          <Button onClick={() => router.push('/librarian/qr-generator')} className="h-18 flex flex-col bg-zinc-800 text-white">
             <QrCode className="h-6 w-6 mb-1" />
             QR Generator
           </Button>

@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from 'sonner'
-import { User, Mail, Phone, MapPin, CreditCard, IdCard } from 'lucide-react'
+import { User, Mail, Phone, MapPin, CreditCard, IdCard, Camera } from 'lucide-react'
 import { ShimmerPostItem } from "react-shimmer-effects";
 
 interface UserProfile {
@@ -18,6 +18,7 @@ interface UserProfile {
   studentId?: string
   fine: number
   role: string
+  imageUrl?: string // Add this if you want profile pic URL
 }
 
 export default function UserProfile() {
@@ -75,21 +76,52 @@ export default function UserProfile() {
     }
   }
 
-  if (!user) {
-    return <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <ShimmerPostItem card title text cta />
-        <ShimmerPostItem card title text cta />
+  const handleImageUpload = () => {
+    toast.info("Profile image upload not implemented yet!")
+  }
 
-    </div>
+  if (!user) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <ShimmerPostItem card title text cta />
+        <ShimmerPostItem card title text cta />
+      </div>
+    )
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
-          <p className="text-gray-600">Manage your personal information and account settings</p>
+        <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
+            <p className="text-gray-600">Manage your personal information and account settings</p>
+          </div>
+
+          {/* ✅ Profile picture section */}
+          <div className="flex flex-col items-center mt-6 md:mt-0">
+            <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-200">
+              {user.imageUrl ? (
+                <img
+                  src={user.imageUrl}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="flex items-center justify-center w-full h-full bg-gray-300 text-white text-2xl font-bold">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+              )}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-2"
+              onClick={handleImageUpload}
+            >
+              <Camera className="h-4 w-4 mr-2" /> Upload New
+            </Button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -103,7 +135,7 @@ export default function UserProfile() {
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <Label className="mb-2" htmlFor="name">Full Name</Label>
+                    <Label htmlFor="name">Full Name</Label>
                     <div className="relative">
                       <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                       <Input
@@ -115,9 +147,9 @@ export default function UserProfile() {
                       />
                     </div>
                   </div>
-                  
+
                   <div>
-                    <Label className="mb-2" htmlFor="email">Email</Label>
+                    <Label htmlFor="email">Email</Label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                       <Input
@@ -128,9 +160,9 @@ export default function UserProfile() {
                       />
                     </div>
                   </div>
-                  
+
                   <div>
-                    <Label className="mb-2" htmlFor="phone">Phone Number</Label>
+                    <Label htmlFor="phone">Phone Number</Label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                       <Input
@@ -142,9 +174,9 @@ export default function UserProfile() {
                       />
                     </div>
                   </div>
-                  
+
                   <div>
-                    <Label className="mb-2" htmlFor="address">Address</Label>
+                    <Label htmlFor="address">Address</Label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                       <Input
@@ -156,7 +188,7 @@ export default function UserProfile() {
                       />
                     </div>
                   </div>
-                  
+
                   <Button type="submit" className="bg-zinc-800 text-white" disabled={loading}>
                     {loading ? 'Updating...' : 'Update Profile'}
                   </Button>
@@ -181,7 +213,7 @@ export default function UserProfile() {
                     </div>
                   </div>
                 )}
-                
+
                 <div className="flex items-center gap-3">
                   <CreditCard className="h-4 w-4 text-gray-500" />
                   <div>

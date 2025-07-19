@@ -4,30 +4,38 @@ import { Button } from "@/components/ui/button"
 import {BookOpen,User} from 'lucide-react'
 import {useEffect,useState} from 'react'
 import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 interface User {
   id: string
   name: string
   email: string
   role: string
-  studentId?: string
 }
 
 export default function NavbarSection(){
+    const pathname = usePathname()
     const router = useRouter();
     const [user,setUser] = useState<User>(null);
     const [isProfile,setIsProfile] = useState<boolean>(false);
 
     useEffect(() => {
-      fetchToken()
+      fetchUser()
     }, [])
 
-    const fetchToken = async () => {
+    useEffect(() => {
+      if(pathname === "/librarian/dashboard" || pathname === "/user/dashboard"){
+        setIsProfile(false)
+      } else{
+        setIsProfile(true)
+      }
+    }, [pathname])
+
+    const fetchUser = async () => {
       try{
         const res = await fetch('/api/auth/me')
         if(res.ok){
           const data = await res.json();
-          console.log(data.user)
           setUser(data.user)
         }
       } catch(err){
@@ -46,9 +54,6 @@ export default function NavbarSection(){
       } catch(err){
         console.log(error);
       }
-    }
-    const HandleNavClick = () => {
-      setIsProfile(!isProfile)
     }
 
     return(
@@ -91,7 +96,6 @@ export default function NavbarSection(){
                   <Link
                     href="/user/profile"
                     className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
-                    onClick={HandleNavClick}
                   >
                     Profile
                   </Link>
@@ -100,7 +104,6 @@ export default function NavbarSection(){
                   <Link
                     href="/user/dashboard"
                     className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
-                    onClick={HandleNavClick}
                   >
                     Home
                   </Link>
@@ -111,7 +114,6 @@ export default function NavbarSection(){
                   <Link
                     href="/librarian/profile"
                     className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
-                    onClick={HandleNavClick}
                   >
                     Profile
                   </Link>
@@ -120,7 +122,6 @@ export default function NavbarSection(){
                   <Link
                     href="/librarian/dashboard"
                     className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
-                    onClick={HandleNavClick}
                   >
                     Home
                   </Link>
