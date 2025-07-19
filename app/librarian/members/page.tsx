@@ -143,7 +143,7 @@ export default function MembersManagement() {
                     <CreditCard className="h-4 w-4 text-gray-500" />
                     <span className="text-sm text-gray-600">Fine: </span>
                     <Badge variant={user.fine > 0 ? 'destructive' : 'default'}>
-                      ${user.fine.toFixed(2)}
+                      ₹{user.fine.toFixed(2)}
                     </Badge>
                   </div>
                   

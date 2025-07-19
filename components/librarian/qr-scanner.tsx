@@ -57,7 +57,7 @@ export function QRScanner({ onScan, title = 'QR Scanner' }: QRScannerProps) {
   }
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className="bg-white border border-gray-200 shadow-lg rounded-md p-4">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>

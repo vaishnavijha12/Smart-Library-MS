@@ -189,14 +189,14 @@ export default function LibrarianDashboard() {
 
         <Tabs defaultValue="qr" className="space-y-6">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="qr">QR Code Operations</TabsTrigger>
-            <TabsTrigger value="manual">Manual Operations</TabsTrigger>
+            <TabsTrigger className="bg-white border border-gray-200 rounded-md p-2" value="qr">QR Code Operations</TabsTrigger>
+            <TabsTrigger className="bg-white border border-gray-200 rounded-md p-2" value="manual">Manual Operations</TabsTrigger>
           </TabsList>
 
           <TabsContent value="manual" className="space-y-6 bg-gray-100">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Manual Issue */}
-              <Card>
+              <Card className="bg-white border border-gray-200 shadow-lg rounded-md p-4">
                 <CardHeader>
                   <CardTitle>Issue Book</CardTitle>
                   <CardDescription>Issue a book to a student manually</CardDescription>
@@ -231,7 +231,7 @@ export default function LibrarianDashboard() {
               </Card>
 
               {/* Manual Return */}
-              <Card>
+              <Card className="bg-white border border-gray-200 shadow-lg rounded-md p-4">
                 <CardHeader>
                   <CardTitle>Return Book</CardTitle>
                   <CardDescription>Process book return manually</CardDescription>
@@ -257,10 +257,10 @@ export default function LibrarianDashboard() {
             </div>
           </TabsContent>
 
-          <TabsContent value="qr" className="space-y-6 bg-gray-100">
+          <TabsContent value="qr" className="space-y-6 ">
             {scanMode === 'none' ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Card>
+                <Card className="bg-white border border-gray-200 shadow-lg rounded-md p-4">
                   <CardHeader>
                     <CardTitle>Quick Issue</CardTitle>
                     <CardDescription>Issue books using QR code scanner</CardDescription>
@@ -276,7 +276,7 @@ export default function LibrarianDashboard() {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="bg-white border border-gray-200 shadow-lg rounded-md p-4">
                   <CardHeader>
                     <CardTitle>Quick Return</CardTitle>
                     <CardDescription>Return books using QR code scanner</CardDescription>
@@ -293,8 +293,8 @@ export default function LibrarianDashboard() {
                 </Card>
               </div>
             ) : (
-              <div className="flex justify-center">
-                <div className="space-y-4">
+              <div className="flex justify-center px-4">
+                <div className="w-full max-w-md space-y-4 p-6 bg-white rounded-lg shadow">
                   <QRScanner
                     onScan={handleQRScan}
                     title={
@@ -311,7 +311,7 @@ export default function LibrarianDashboard() {
                       resetQuickIssue()
                     }} 
                     variant="outline" 
-                    className="w-full text-white bg-zinc-800"
+                    className="w-1/2 ml-24 text-white bg-zinc-800"
                   >
                     Cancel
                   </Button>
