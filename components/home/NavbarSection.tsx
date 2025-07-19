@@ -5,9 +5,17 @@ import {BookOpen} from 'lucide-react'
 import {useEffect,useState} from 'react'
 import { useRouter } from 'next/navigation'
 
+interface User {
+  id: string
+  name: string
+  email: string
+  role: string
+  studentId?: string
+}
+
 export default function NavbarSection(){
     const router = useRouter();
-    const [token,setToken] = useState<string>('');
+    const [user,setUser] = useState<User>(null);
 
     useEffect(() => {
       fetchToken()
@@ -18,7 +26,8 @@ export default function NavbarSection(){
         const res = await fetch('/api/auth/me')
         if(res.ok){
           const data = await res.json();
-          setToken(data.AuthToken)
+          console.log(data.user)
+          setUser(data.user)
         }
       } catch(err){
         console.log(err);
@@ -49,7 +58,7 @@ export default function NavbarSection(){
               LibraryMS
             </Link>
           </div>
-          {(token === null) ?
+          {(user === null) ?
           (<div className="space-x-4">
             <Link
               href="/auth/login"
