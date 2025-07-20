@@ -4,24 +4,29 @@ import { db } from '@/lib/db'
 
 async function handler(request: NextRequest) {
   const user = (request as any).user
-
+  console.log(user.userId)
   const bookIssues = await db.bookIssue.findMany({
-    where: { 
-      userId: user.userId,
-      status: 'ISSUED'
-    },
-    include: {
-      book: {
-        select: {
-          id: true,
-          title: true,
-          author: true,
-          isbn: true
+  where: {
+    userId: user.userId,
+    status: 'ISSUED'
+  },
+  include: {
+    bookCopy: {
+      include: {
+        book: {
+          select: {
+            id: true,
+            title: true,
+            author: true,
+            isbn: true
+          }
         }
       }
-    },
-    orderBy: { issueDate: 'desc' }
-  })
+    }
+  },
+  orderBy: { issueDate: 'desc' }
+})
+
 
   return Response.json({ bookIssues })
 }

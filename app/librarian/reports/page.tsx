@@ -1,9 +1,15 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent
+} from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Book, User, Clock, IndianRupee } from 'lucide-react'
+import { Book, User, Clock, IndianRupee, AlertCircle } from 'lucide-react'
 
 interface BookIssue {
   id: string
@@ -20,11 +26,14 @@ interface BookIssue {
     email: string
     fine: number
   }
-  book: {
+  bookCopy: {
     id: string
-    title: string
-    author: string
-    isbn: string
+    book: {
+      id: string
+      title: string
+      author: string
+      isbn: string
+    }
   }
 }
 
@@ -49,134 +58,116 @@ export default function IssueReports() {
 
   const totalFines = bookIssues.reduce((sum, issue) => sum + issue.overdueFine, 0)
   const overdueBooks = bookIssues.filter(issue => issue.isOverdue).length
+  const activeUsers = new Set(bookIssues.map(issue => issue.user.id)).size
 
   return (
-    <div className="min-h-screen bg-gray-50">      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Book Issue Reports</h1>
-          <p className="text-gray-600">View currently issued books and member information</p>
+    <main className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div className="mb-10">
+          <h1 className="text-4xl font-bold text-zinc-800 mb-2">Book Issue Reports</h1>
+          <p className="text-gray-600">Live snapshot of all issued books & member dues.</p>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Issued</CardTitle>
-              <Book className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{bookIssues.length}</div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Overdue Books</CardTitle>
-              <Clock className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-red-600">{overdueBooks}</div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Fines</CardTitle>
-              <IndianRupee className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">₹{totalFines.toFixed(2)}</div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Users</CardTitle>
-              <User className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {new Set(bookIssues.map(issue => issue.user.id)).size}
-              </div>
-            </CardContent>
-          </Card>
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+          {[
+            { title: 'Total Issued', value: bookIssues.length, icon: <Book className="h-5 w-5" /> },
+            { title: 'Overdue Books', value: overdueBooks, icon: <Clock className="h-5 w-5" /> },
+            { title: 'Pending Fines', value: `₹${totalFines.toFixed(2)}`, icon: <IndianRupee className="h-5 w-5" /> },
+            { title: 'Active Users', value: activeUsers, icon: <User className="h-5 w-5" /> },
+          ].map(({ title, value, icon }) => (
+            <Card
+              key={title}
+              className="shadow-sm hover:shadow-md transition rounded-lg border border-zinc-200 bg-white"
+            >
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-semibold text-gray-700">{title}</CardTitle>
+                <div className="text-zinc-500">{icon}</div>
+              </CardHeader>
+              <CardContent>
+                <div className={`text-3xl font-bold ${title.includes('Overdue') ? 'text-red-600' : 'text-zinc-800'}`}>
+                  {value}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
-        {/* Issue Details */}
-        <Card>
+        {/* Details */}
+        <Card className="shadow-sm border border-zinc-200 bg-white">
           <CardHeader>
-            <CardTitle>Currently Issued Books</CardTitle>
-            <CardDescription>Detailed view of all issued books and their status</CardDescription>
+            <CardTitle className="text-lg font-semibold text-zinc-800">Issued Books Details</CardTitle>
+            <CardDescription className="text-gray-600">
+              Detailed list of books, borrowers, and due status.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {bookIssues.length > 0 ? (
               <div className="space-y-4">
-                {bookIssues.map((issue) => (
-                  <div key={issue.id} className="border rounded-lg p-4 hover:bg-gray-50">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                {bookIssues.map((issue) => {
+                  const dueDate = new Date(issue.dueDate)
+                  const issuedDate = new Date(issue.issueDate)
+                  const book = issue.bookCopy.book
+
+                  return (
+                    <div
+                      key={issue.id}
+                      className={`p-4 border rounded-lg flex flex-col md:flex-row md:items-center md:justify-between gap-4 ${
+                        issue.isOverdue ? 'border-red-300 bg-red-50' : 'border-zinc-200 bg-white'
+                      }`}
+                    >
                       {/* Book Info */}
-                      <div>
-                        <h4 className="font-semibold text-lg">{issue.book.title}</h4>
-                        <p className="text-sm text-gray-600">by {issue.book.author}</p>
-                        <p className="text-xs text-gray-500">ISBN: {issue.book.isbn}</p>
-                        <p className="text-xs text-gray-500">Book ID: {issue.book.id}</p>
+                      <div className="flex-1">
+                        <h4 className="text-lg font-bold text-zinc-800">{book.title}</h4>
+                        <p className="text-sm text-gray-700">by {book.author}</p>
+                        <p className="text-xs text-gray-500">ISBN: {book.isbn} | Copy ID: {issue.bookCopy.id}</p>
                       </div>
-                      
+
                       {/* User Info */}
-                      <div>
+                      <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <User className="h-4 w-4 text-gray-500" />
                           <span className="font-medium">{issue.user.name}</span>
                         </div>
                         <p className="text-sm text-gray-600">ID: {issue.user.studentId}</p>
                         <p className="text-sm text-gray-600">{issue.user.email}</p>
-                        <div className="flex items-center gap-2 mt-2">
-                          <span className="text-xs text-gray-500">Total Fine:</span>
-                          <Badge variant={issue.user.fine > 0 ? 'destructive' : 'default'}>
-                            ₹{issue.user.fine.toFixed(2)}
-                          </Badge>
-                        </div>
+                        <Badge variant={issue.user.fine > 0 ? 'destructive' : 'default'} className="mt-2">
+                          Total Fine: ₹{issue.user.fine.toFixed(2)}
+                        </Badge>
                       </div>
-                      
-                      {/* Issue Details */}
-                      <div>
-                        <div className="space-y-2">
-                          <div>
-                            <span className="text-sm text-gray-500">Issued:</span>
-                            <p className="text-sm">{new Date(issue.issueDate).toLocaleDateString()}</p>
-                          </div>
-                          <div>
-                            <span className="text-sm text-gray-500">Due:</span>
-                            <p className={`text-sm ${issue.isOverdue ? 'text-red-600 font-medium' : ''}`}>
-                              {new Date(issue.dueDate).toLocaleDateString()}
-                            </p>
-                          </div>
+
+                      {/* Dates & Status */}
+                      <div className="flex-1">
+                        <div className="space-y-1">
+                          <p className="text-sm text-gray-600">
+                            <span className="font-medium">Issued:</span> {issuedDate.toLocaleDateString()}
+                          </p>
+                          <p className={`text-sm ${issue.isOverdue ? 'text-red-600 font-semibold' : 'text-gray-700'}`}>
+                            <span className="font-medium">Due:</span> {dueDate.toLocaleDateString()}
+                          </p>
                           {issue.isOverdue && (
-                            <div>
-                              <Badge variant="destructive">
-                                {issue.daysOverdue} days overdue
-                              </Badge>
-                              <p className="text-sm text-red-600 mt-1">
-                                Fine: ${issue.overdueFine.toFixed(2)}
-                              </p>
+                            <div className="mt-1 flex items-center gap-2">
+                              <Badge variant="destructive">{issue.daysOverdue} days overdue</Badge>
+                              <AlertCircle className="h-4 w-4 text-red-500" />
+                              <span className="text-sm text-red-600 font-medium">+₹{issue.overdueFine.toFixed(2)}</span>
                             </div>
                           )}
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             ) : (
-              <div className="text-center py-8">
+              <div className="text-center py-12">
                 <Book className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">No books currently issued</p>
+                <p className="text-gray-500">No books currently issued.</p>
               </div>
             )}
           </CardContent>
         </Card>
       </div>
-    </div>
+    </main>
   )
 }

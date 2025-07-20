@@ -15,12 +15,16 @@ async function handler(request: NextRequest) {
           fine: true
         }
       },
-      book: {
-        select: {
-          id: true,
-          title: true,
-          author: true,
-          isbn: true
+      bookCopy: {
+        include: {
+          book: {
+            select: {
+              id: true,
+              title: true,
+              author: true,
+              isbn: true
+            }
+          }
         }
       }
     },
