@@ -10,33 +10,30 @@ async function handler(request: NextRequest) {
   }
 
   try {
-    // Find user by student ID
+    // Find the user by student ID
     const user = await db.user.findFirst({
-      where: { studentId }
+      where: { id: studentId }
     })
 
     if (!user) {
       return Response.json({ error: 'Student not found' }, { status: 404 })
     }
 
-    // Find book
-    const book = await db.book.findUnique({
-      where: { id: bookId }
+    // Find an AVAILABLE BookCopy for this book
+    const bookCopy = await db.bookCopy.findFirst({
+      where: {
+        id: bookId,
+      }
     })
-
-    if (!book) {
-      return Response.json({ error: 'Book not found' }, { status: 404 })
+    if (!bookCopy) {
+      return Response.json({ error: 'No available copies for this book' }, { status: 400 })
     }
 
-    if (book.available <= 0) {
-      return Response.json({ error: 'Book not available' }, { status: 400 })
-    }
-
-    // Check if user already has this book issued
+    // Check if user already has an active issue for this book
     const existingIssue = await db.bookIssue.findFirst({
       where: {
         userId: user.id,
-        bookId,
+        bookCopyId: bookId,
         status: 'ISSUED'
       }
     })
@@ -45,33 +42,45 @@ async function handler(request: NextRequest) {
       return Response.json({ error: 'Book already issued to this student' }, { status: 400 })
     }
 
-    // Create book issue record
+    // Create new issue
     const dueDate = new Date()
-    dueDate.setDate(dueDate.getDate() + 14) // 14 days from now
+    dueDate.setDate(dueDate.getDate() + 14)
 
     const bookIssue = await db.bookIssue.create({
       data: {
         userId: user.id,
-        bookId,
+        bookCopyId: bookCopy.id,
         dueDate,
         status: 'ISSUED'
       },
       include: {
         user: { select: { name: true, studentId: true } },
-        book: { select: { title: true, author: true } }
+        bookCopy: {
+          select: {
+            id: true,
+            status: true,
+            book: {
+              select: {
+                title: true,
+                author: true
+              }
+            }
+          }
+        }
       }
     })
 
-    // Update book availability
-    await db.book.update({
-      where: { id: bookId },
-      data: { available: { decrement: 1 } }
+    // Mark BookCopy as ISSUED
+    await db.bookCopy.update({
+      where: { id: bookCopy.id },
+      data: { status: 'ISSUED' }
     })
 
-    return Response.json({ 
+    return Response.json({
       message: 'Book issued successfully',
-      bookIssue 
+      bookIssue
     })
+
   } catch (error) {
     console.error('Issue book error:', error)
     return Response.json({ error: 'Failed to issue book' }, { status: 500 })

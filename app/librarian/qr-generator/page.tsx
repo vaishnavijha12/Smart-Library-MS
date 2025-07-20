@@ -36,7 +36,7 @@ export default function QRGenerator() {
 
   const fetchBooks = async () => {
     try {
-      const response = await fetch('/api/books')
+      const response = await fetch('/api/books/bookCopy')
       if (response.ok) {
         const data = await response.json()
         setBooks(data.books)
@@ -148,7 +148,7 @@ export default function QRGenerator() {
                     <SelectContent className="bg-white border border-gray-200 shadow-lg rounded-md p-2">
                       {books.map((book) => (
                         <SelectItem key={book.id} value={book.id}>
-                          {book.title} by {book.author}
+                          {book.id}
                         </SelectItem>
                       ))}
                     </SelectContent>

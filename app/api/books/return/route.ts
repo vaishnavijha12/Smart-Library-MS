@@ -13,12 +13,11 @@ async function handler(request: NextRequest) {
     // Find the book issue record
     const bookIssue = await db.bookIssue.findFirst({
       where: {
-        bookId,
+        bookCopyId: bookId,
         status: 'ISSUED'
       },
       include: {
         user: { select: { name: true, studentId: true } },
-        book: { select: { title: true, author: true } }
       }
     })
 
@@ -33,7 +32,7 @@ async function handler(request: NextRequest) {
 
     if (currentDate > dueDate) {
       const daysOverdue = Math.ceil((currentDate.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24))
-      fine = daysOverdue * 5 // $5 per day
+      fine = daysOverdue * 5 // 5 per day
     }
 
     // Update book issue record
@@ -46,7 +45,6 @@ async function handler(request: NextRequest) {
       },
       include: {
         user: { select: { name: true, studentId: true } },
-        book: { select: { title: true, author: true } }
       }
     })
 
@@ -59,9 +57,9 @@ async function handler(request: NextRequest) {
     }
 
     // Update book availability
-    await db.book.update({
+    await db.bookCopy.update({
       where: { id: bookId },
-      data: { available: { increment: 1 } }
+      data: { status : 'AVAILABLE' }
     })
 
     return Response.json({ 

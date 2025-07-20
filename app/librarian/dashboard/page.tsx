@@ -101,7 +101,8 @@ export default function LibrarianDashboard() {
         toast.error('User not found')
         return
       }
-
+      console.log(userId)
+      console.log(bookId)
       const response = await fetch('/api/books/issue', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
