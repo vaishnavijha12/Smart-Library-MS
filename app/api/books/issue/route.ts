@@ -8,11 +8,12 @@ async function handler(request: NextRequest) {
   if (!studentId || !bookId) {
     return Response.json({ error: 'Student ID and Book ID are required' }, { status: 400 })
   }
-
+  console.log(studentId)
+  console.log(bookId)
   try {
     // Find the user by student ID
     const user = await db.user.findFirst({
-      where: { id: studentId }
+      where: { studentId }
     })
 
     if (!user) {

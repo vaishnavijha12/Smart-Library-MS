@@ -10,7 +10,7 @@ async function handler(request: NextRequest) {
   }
 
   try {
-    const qrData = `${id}`
+    const qrData = `${type.toUpperCase()}:${id}`
     const qrCodeUrl = await generateQRCode(qrData)
 
     return Response.json({ qrCodeUrl, data: qrData })
