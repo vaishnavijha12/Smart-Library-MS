@@ -4,7 +4,6 @@ import { db } from '@/lib/db'
 
 async function handler(request: NextRequest) {
   const user = (request as any).user
-  console.log(user.userId)
   const bookIssues = await db.bookIssue.findMany({
   where: {
     userId: user.userId,
