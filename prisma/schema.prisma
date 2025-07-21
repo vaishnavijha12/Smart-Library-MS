@@ -22,7 +22,7 @@ model User {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   bookIssues   BookIssue[]
-  
+  payments  Payment[] // relation to Payment
   @@map("users")
 }
 
@@ -65,9 +65,28 @@ model BookIssue {
   @@map("book_issues")
 }
 
+model Payment {
+  id        String   @id @default(uuid()) // override with merchantTransactionId
+  userId    String
+  amount    Float
+  status    PaymentStatus   // e.g. PENDING, SUCCESS, FAILED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("payments")
+}
+
 enum CopyStatus {
   AVAILABLE
   ISSUED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
 }
 
 enum IssueStatus {

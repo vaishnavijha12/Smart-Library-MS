@@ -4,7 +4,6 @@ import { verifyToken, getTokenFromRequest } from './auth'
 export function withAuth(handler: Function, requiredRole?: string) {
   return async (request: NextRequest, context?: any) => {
     const token = getTokenFromRequest(request)
-    
     if (!token) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }

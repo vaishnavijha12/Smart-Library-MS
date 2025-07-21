@@ -8,6 +8,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { toast } from 'sonner'
 import { User, Mail, Phone, MapPin, CreditCard, IdCard, Camera } from 'lucide-react'
 import { ShimmerPostItem } from "react-shimmer-effects";
+import {useRouter} from 'next/navigation'
+import axios from 'axios'
+
 
 interface UserProfile {
   id: string
@@ -22,6 +25,7 @@ interface UserProfile {
 }
 
 export default function UserProfile() {
+  const router = useRouter()
   const [user, setUser] = useState<UserProfile | null>(null)
   const [formData, setFormData] = useState({
     name: '',
@@ -79,6 +83,23 @@ export default function UserProfile() {
 
   const handleImageUpload = () => {
     toast.info("Profile image upload not implemented yet!")
+  }
+
+  const HandleFinePayment = async () => {
+    const data = {
+      MUID: 'MUID' + Date.now(),
+      transactionId: 'T' + Date.now()
+    }
+    try{
+      await axios.post('/api/payment/fine',data)
+      .then((res) => {
+          if(res.data && res.data.data.instrumentResponse.redirectInfo.url){
+          router.push(res.data.data.instrumentResponse.redirectInfo.url)
+        }
+      })
+    } catch(error) {
+      console.log("Error in payment: ",error)
+    }
   }
 
   if (!user) {
@@ -225,7 +246,7 @@ export default function UserProfile() {
                 </div>
 
                 {user.fine > 0 && (
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full" onClick={HandleFinePayment}>
                     Pay Fine
                   </Button>
                 )}

@@ -3,7 +3,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { verifyToken } from '@/lib/auth'
 
-export default async function Login(){
+export default function Login(){
     const cookieStore = cookies()
         const token = cookieStore.get('auth-token')?.value
 
