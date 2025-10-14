@@ -1,80 +1,83 @@
-Next.js PostgreSQL Project Boilerplate 🚀
-A brief description of your project goes here. This could be a web application for [purpose], a starter kit, or a full-stack solution.
+# 📚 Smart Library Management System (Smart LMS)
 
-✨ Features
-Framework: Next.js 14 (App Router)
+A **smart, responsive, and automated Library Management System** built with **Next.js**, **Prisma**, **PostgreSQL**, and **TypeScript**.  
+Designed for modern educational institutions to simplify **book management, fine payments, and QR-based issuing** with real-time dashboards for both students and librarians.
 
-Database: PostgreSQL
+---
 
-Styling: Tailwind CSS (or specify your choice)
+## 🚀 Tech Stack
 
-Authentication: JWT (JSON Web Tokens)
+| Technology | Description |
+|-------------|-------------|
+| **Next.js 14 (App Router)** | React framework with server-side rendering |
+| **TypeScript** | Strict typing for scalable and bug-free code |
+| **Prisma ORM** | Type-safe ORM for PostgreSQL |
+| **PostgreSQL** | Robust relational database |
+| **Tailwind CSS** | Responsive utility-first CSS framework |
+| **JWT Authentication** | Secure authentication and authorization |
+| **PhonePe API** | Payment gateway integration for fine payments |
 
-⚙️ Getting Started
-Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+---
 
-Prerequisites
-Make sure you have the following software installed on your machine:
+## ✨ Features
 
-Node.js (v18.x or later recommended)
+- 🔹 QR Code based **Book Issue & Return**
+- 🔹 **Fine Payment Integration** using PhonePe API
+- 🔹 **Role-based Dashboards** for Students and Librarians
+- 🔹 **Real-time Reports** for issued, returned, and overdue books
+- 🔹 **Advanced Search and Filters**
+- 🔹 **Fully Normalized Database Schema**
+- 🔹 **Secure JWT-based Authentication**
+- 🔹 **Responsive UI** using Tailwind CSS
 
-npm or yarn
+---
 
-PostgreSQL installed and running.
+## ⚙️ Complete Setup Guide
 
-🔧 Installation and Setup
-Follow these steps to set up your development environment.
+Follow these instructions **step-by-step** to set up and run the Smart LMS project locally.
 
-1. Clone the repository:
+---
 
-Bash
+### 1️⃣ Clone the Repository
 
-git clone <your-repository-url>
-cd <project-directory>
-2. Install dependencies:
+```bash
+git clone https://github.com/<your-username>/smart-lms.git
+cd smart-lms
 
-Using npm or yarn, install the project's dependencies.
+2️⃣ Install Dependencies
 
-Bash
+Using npm or yarn to install all required packages:
 
 npm install
 # OR
 yarn install
-3. Set up the database:
 
-You'll need to create a PostgreSQL database for the project.
+3️⃣ Set Up PostgreSQL Database
 
-Open your PostgreSQL client (like psql or a GUI tool like Postico/DBeaver).
+Open your PostgreSQL shell or GUI tool (like DBeaver, Postico, or pgAdmin) and create a new database:
 
-Create a new database for your project.
+CREATE DATABASE smart_lms_db;
 
-SQL
+4️⃣ Configure Environment Variables
 
-CREATE DATABASE my_project_db;
-Make a note of your database username, password, host, and database name. You'll need these to create the DATABASE_URL.
-
-4. Configure Environment Variables:
-
-Create a .env.local file in the root of the project by copying the example file.
-
-Bash
+Create a .env.local file in the project root directory by copying the example file:
 
 cp .env.example .env.local
-Now, open .env.local and fill in the required values.
 
-.env file -- 
 
-# PostgreSQL Database Connection URL
-# Format: postgresql://[USER]:[PASSWORD]@[HOST]:[PORT]/[DATABASE]
-DATABASE_URL="postgresql://postgres:yourpassword@localhost:5432/my_project_db"
+Now open .env.local and add your credentials:
 
-# JWT Secret for signing tokens (use a long, random string)
+# PostgreSQL Database URL
+# Format: postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+DATABASE_URL="postgresql://postgres:yourpassword@localhost:5432/smart_lms_db"
+
+# JWT Secret for token signing
 JWT_SECRET=your_super_strong_jwt_secret
 
-# Node Environment
+# Node environment
 NODE_ENV=development
 
-# Merchant / Payment Gateway Credentials (if applicable)
+# Payment Gateway (PhonePe)
 MERCHANT_BASE_URL=
 MERCHANT_STATUS_URL=
 MERCHANT_KEY=
@@ -83,19 +86,25 @@ MERCHANT_ID=
 # Custom Encryption (if applicable)
 ENCRYPTION_SECRET=super_secret_passphrase
 IV_LENGTH=16
-5. Run Database Migrations:
 
-If your project uses an ORM like Prisma, run the migrations to set up your database schema.
+5️⃣ Run Prisma Migrations
 
-Bash
+Use Prisma ORM to create database tables and schema automatically.
 
-# Example for Prisma ORM
 npx prisma migrate dev
-6. Run the Development Server:
 
-Start the Next.js development server.
 
-Bash
+If you make schema changes later, regenerate the Prisma client:
+
+npx prisma generate
+
+6️⃣ Run the Development Server
+
+Start your local development server:
 
 npm run dev
-Your application should now be running at http://localhost:3000. 🎉
+
+
+The application will start at:
+
+http://localhost:3000
