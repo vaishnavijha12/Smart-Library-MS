@@ -1,7 +1,6 @@
 import QRCode from 'qrcode'
 import crypto from 'crypto'
 
-// Require secret from environment
 const SECRET_PASSPHRASE = process.env.ENCRYPTION_SECRET || 'super_secret_passphrase'
 if (!SECRET_PASSPHRASE) {
   throw new Error("ENCRYPTION_SECRET is not set in environment variables")
@@ -43,9 +42,7 @@ export async function generateQRCode(data: string): Promise<string> {
 // Parse only after decryption
 export function parseQRData(encryptedData: string): { type: 'user' | 'book', id: string } | null {
   try {
-    console.log(encryptedData)
     const decrypted = decrypt(encryptedData)
-    console.log(decrypted)
     if (decrypted.startsWith('USER:')) {
       return { type: 'user', id: decrypted.replace('USER:', '') }
     }
