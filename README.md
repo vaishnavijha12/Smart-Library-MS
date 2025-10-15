@@ -9,7 +9,7 @@ Designed for modern educational institutions to simplify **book management, fine
 
 | Technology | Description |
 |-------------|-------------|
-| **Next.js 14 (App Router)** | React framework with server-side rendering |
+| **Next.js 15 (App Router)** | React framework with server-side rendering |
 | **TypeScript** | Strict typing for scalable and bug-free code |
 | **Prisma ORM** | Type-safe ORM for PostgreSQL |
 | **PostgreSQL** | Robust relational database |
@@ -108,3 +108,5 @@ npm run dev
 The application will start at:
 
 http://localhost:3000
+
+
