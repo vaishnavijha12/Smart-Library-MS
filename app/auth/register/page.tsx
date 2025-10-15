@@ -1,4 +1,4 @@
-import RegisterForm from "@/components/auth/registerForm"
+import RegisterForm from "@/components/auth/RegisterForm"
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { verifyToken } from '@/lib/auth'
