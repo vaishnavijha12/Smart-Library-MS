@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -47,21 +47,21 @@ export default function BooksManagement() {
     quantity: 1,
   })
 
-  useEffect(() => {
-    fetchBooks()
-  }, [search])
-
-  const fetchBooks = async () => {
+  const fetchBooks = useCallback(async () => {
     try {
       const response = await fetch(`/api/books?search=${search}`)
       if (response.ok) {
         const data = await response.json()
         setBooks(data.books)
       }
-    } catch (error) {
-      console.error('Failed to fetch books:', error)
+      } catch (err) {
+        console.error('Failed to fetch books:', err)
     }
-  }
+  }, [search])
+
+  useEffect(() => {
+    fetchBooks()
+  }, [fetchBooks])
 
   const handleAddBook = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -90,7 +90,8 @@ export default function BooksManagement() {
       } else {
         toast.error(data.error || 'Failed to add book')
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Add book error:', err)
       toast.error('An error occurred while adding book')
     }
   }
@@ -109,7 +110,8 @@ export default function BooksManagement() {
       } else {
         toast.error('Failed to delete book')
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Delete book error:', err)
       toast.error('An error occurred while deleting book')
     }
   }

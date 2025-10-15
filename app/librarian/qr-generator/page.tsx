@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from 'sonner'
 import { QrCode, Download } from 'lucide-react'
+import Image from 'next/image'
 
 interface Book {
   id: string
@@ -41,8 +41,8 @@ export default function QRGenerator() {
         const data = await response.json()
         setBooks(data.books)
       }
-    } catch (error) {
-      console.error('Failed to fetch books:', error)
+    } catch (err) {
+      console.error('Failed to fetch books:', err)
     }
   }
 
@@ -53,8 +53,8 @@ export default function QRGenerator() {
         const data = await response.json()
         setUsers(data.users)
       }
-    } catch (error) {
-      console.error('Failed to fetch users:', error)
+    } catch (err) {
+      console.error('Failed to fetch users:', err)
     }
   }
 
@@ -81,7 +81,8 @@ export default function QRGenerator() {
       } else {
         toast.error(data.error || 'Failed to generate QR code')
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('QR generation error:', err)
       toast.error('An error occurred while generating QR code')
     } finally {
       setLoading(false)
@@ -195,11 +196,9 @@ export default function QRGenerator() {
               {qrCodeUrl ? (
                 <div className="text-center space-y-4">
                   <div className="flex justify-center">
-                    <img 
-                      src={qrCodeUrl} 
-                      alt="Generated QR Code" 
-                      className="border rounded-lg p-4 bg-white"
-                    />
+                    <div className="border rounded-lg p-4 bg-white inline-block">
+                      <Image src={qrCodeUrl} alt="Generated QR Code" width={256} height={256} />
+                    </div>
                   </div>
                   <Button onClick={downloadQRCode} className="w-full">
                     <Download className="h-4 w-4 mr-2" />

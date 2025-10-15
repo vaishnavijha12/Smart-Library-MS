@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -22,11 +22,7 @@ export function BookSearch() {
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    fetchBooks()
-  }, [search])
-
-  const fetchBooks = async () => {
+  const fetchBooks = useCallback(async () => {
     setLoading(true)
     try {
       const response = await fetch(`/api/books?search=${search}`)
@@ -39,7 +35,11 @@ export function BookSearch() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [search])
+
+  useEffect(() => {
+    fetchBooks()
+  }, [fetchBooks])
 
   return (
     <div className="space-y-6">

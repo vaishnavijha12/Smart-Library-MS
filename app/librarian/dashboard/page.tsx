@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { QRScanner } from '@/components/librarian/qr-scanner'
 import { toast } from 'sonner'
-import { Book, Users, QrCode, Plus, ArrowLeftRight } from 'lucide-react'
+import { Book, Users, QrCode, ArrowLeftRight } from 'lucide-react'
 import { parseQRData } from '@/lib/qr-utils'
 import { useRouter } from 'next/navigation'
 
@@ -38,7 +38,8 @@ export default function LibrarianDashboard() {
       } else {
         toast.error(data.error || 'Failed to issue book')
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Manual issue error:', err)
       toast.error('An error occurred while issuing book')
     }
   }
@@ -61,7 +62,8 @@ export default function LibrarianDashboard() {
       } else {
         toast.error(data.error || 'Failed to return book')
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Manual return error:', err)
       toast.error('An error occurred while returning book')
     }
   }
@@ -95,7 +97,7 @@ export default function LibrarianDashboard() {
       // First get user's student ID
       const userResponse = await fetch(`/api/users`)
       const userData = await userResponse.json()
-      const user = userData.users.find((u: any) => u.id === userId)
+  const user = userData.users.find((u: { id: string }) => u.id === userId)
       
       if (!user) {
         toast.error('User not found')
@@ -117,7 +119,8 @@ export default function LibrarianDashboard() {
       } else {
         toast.error(data.error || 'Failed to issue book')
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Quick issue error:', err)
       toast.error('An error occurred during quick issue')
     }
   }
@@ -138,7 +141,8 @@ export default function LibrarianDashboard() {
       } else {
         toast.error(data.error || 'Failed to return book')
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Quick return error:', err)
       toast.error('An error occurred during quick return')
     }
   }

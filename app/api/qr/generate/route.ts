@@ -15,6 +15,7 @@ async function handler(request: NextRequest) {
 
     return Response.json({ qrCodeUrl, data: qrData })
   } catch (error) {
+    console.error('QR generation error:', error)
     return Response.json({ error: 'Failed to generate QR code' }, { status: 500 })
   }
 }

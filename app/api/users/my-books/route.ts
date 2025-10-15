@@ -3,7 +3,11 @@ import { withAuth } from '@/lib/middleware'
 import { db } from '@/lib/db'
 
 async function handler(request: NextRequest) {
-  const user = (request as any).user
+  const user = (request as unknown as { user?: { userId?: string } }).user
+  if (!user) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const bookIssues = await db.bookIssue.findMany({
   where: {
     userId: user.userId,

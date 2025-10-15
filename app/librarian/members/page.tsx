@@ -31,8 +31,8 @@ export default function MembersManagement() {
         const data = await response.json()
         setUsers(data.users)
       }
-    } catch (error) {
-      console.error('Failed to fetch users:', error)
+    } catch (err) {
+      console.error('Failed to fetch users:', err)
     }
   }
 
@@ -52,7 +52,8 @@ export default function MembersManagement() {
       } else {
         toast.error('Failed to delete member')
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Delete member error:', err)
       toast.error('An error occurred while deleting member')
     }
   }

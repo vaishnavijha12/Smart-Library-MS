@@ -52,9 +52,11 @@ async function postHandler(request: NextRequest) {
     })
 
     return Response.json({ book })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(error)
-    if (error.code === 'P2002') {
+    // Narrow Prisma unique constraint error (P2002)
+    const e = error as { code?: string }
+    if (e?.code === 'P2002') {
       return Response.json({ error: 'Book with this ISBN already exists' }, { status: 400 })
     }
     return Response.json({ error: 'Failed to create book' }, { status: 500 })

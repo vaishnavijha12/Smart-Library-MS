@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
 import axios from 'axios'
 import {db} from '@/lib/db'
-import { withAuth } from '@/lib/middleware'
 
 export const POST = async (request: NextRequest) => {
   try {
