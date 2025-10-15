@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { withAuth } from '@/lib/middleware'
 import { db } from '@/lib/db'
 
@@ -32,7 +33,7 @@ async function handler() {
 
   // Calculate overdue fines
   const currentDate = new Date()
-  const enrichedIssues = bookIssues.map(issue => {
+  const enrichedIssues = bookIssues.map((issue: any) => {
     const dueDate = new Date(issue.dueDate)
     const isOverdue = currentDate > dueDate
     const daysOverdue = isOverdue ? Math.ceil((currentDate.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24)) : 0

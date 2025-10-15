@@ -19,7 +19,8 @@ async function handler(request: NextRequest & { user?: JWTPayload }) {
       studentId: true,
       phone: true,
       address: true,
-      fine: true,
+        fine: true,
+        profilePic: true,
     },
   })
 
