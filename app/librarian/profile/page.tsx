@@ -28,6 +28,7 @@ export default function LibrarianProfile() {
     address: '',
     profilePic: '',
   })
+  const [preview, setPreview] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export default function LibrarianProfile() {
           address: data.user.address || '',
           profilePic: data.user.profilePic || '',
         })
+        setPreview(data.user.profilePic || null)
       }
     } catch (err) {
       console.error('Failed to fetch user:', err)
@@ -83,7 +85,9 @@ export default function LibrarianProfile() {
       // Example: convert to base64 preview or use your upload logic
       const reader = new FileReader()
       reader.onload = () => {
-        setFormData({ ...formData, profilePic: reader.result as string })
+        const result = reader.result as string
+        setFormData({ ...formData, profilePic: result })
+        setPreview(result)
       }
       reader.readAsDataURL(e.target.files[0])
     }
@@ -119,14 +123,10 @@ export default function LibrarianProfile() {
                   {/* Profile Picture */}
                   <div className="flex items-center space-x-6">
                     <div className="w-20 h-20 rounded-full bg-neutral-200 overflow-hidden">
-                      {formData.profilePic ? (
-                        <Image
-                          src={formData.profilePic}
-                          alt="Profile"
-                          width={80}
-                          height={80}
-                          className="object-cover"
-                        />
+                      {preview ? (
+                        <Image src={preview} alt="Profile" width={80} height={80} className="object-cover" />
+                      ) : formData.profilePic ? (
+                        <Image src={formData.profilePic} alt="Profile" width={80} height={80} className="object-cover" />
                       ) : (
                         <User className="w-full h-full p-4 text-neutral-500" />
                       )}

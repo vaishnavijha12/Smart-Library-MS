@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { hashPassword, signToken, generateStudentId } from '@/lib/auth'
-import type { Role } from '@prisma/client'
 
 export async function POST(request: NextRequest) {
   try {
@@ -34,7 +33,7 @@ export async function POST(request: NextRequest) {
         email,
         password: hashedPassword,
         name,
-        role: normalizedRole as Role,
+        role: normalizedRole,
         studentId
       }
     })

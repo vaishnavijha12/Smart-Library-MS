@@ -22,7 +22,7 @@ interface UserProfile {
   studentId?: string
   fine: number
   role: string
-  imageUrl?: string // Add this if you want profile pic URL
+  profilePic?: string // Add this if you want profile pic URL
 }
 
 export default function UserProfile() {
@@ -33,6 +33,7 @@ export default function UserProfile() {
     phone: '',
     address: ''
   })
+  const [preview, setPreview] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -50,6 +51,7 @@ export default function UserProfile() {
           phone: data.user.phone || '',
           address: data.user.address || ''
         })
+        setPreview(data.user.profilePic || null)
       }
     } catch (error) {
       console.error('Failed to fetch user:', error)
@@ -61,10 +63,11 @@ export default function UserProfile() {
     setLoading(true)
 
     try {
+      const payload = { ...formData, profilePic: preview }
       const response = await fetch(`/api/users/${user?.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       })
 
       if (response.ok) {
@@ -83,7 +86,28 @@ export default function UserProfile() {
   }
 
   const handleImageUpload = () => {
-    toast.info("Profile image upload not implemented yet!")
+    // trigger hidden file input
+    const input = document.getElementById('profilePicInput') as HTMLInputElement | null
+    input?.click()
+  }
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    // Basic size check (2MB)
+    const maxSize = 2 * 1024 * 1024
+    if (file.size > maxSize) {
+      toast.error('Image too large. Max 2MB.')
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = () => {
+      const result = reader.result as string
+      setPreview(result)
+    }
+    reader.readAsDataURL(file)
   }
 
   const HandleFinePayment = async () => {
@@ -123,8 +147,10 @@ export default function UserProfile() {
 
           <div className="flex flex-col items-center mt-6 md:mt-0">
             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-200">
-              {user.imageUrl ? (
-                <Image src={user.imageUrl} alt="Profile" width={96} height={96} className="object-cover" />
+              {preview ? (
+                <Image src={preview} alt="Profile" width={96} height={96} className="object-cover" />
+              ) : user.profilePic ? (
+                <Image src={user.profilePic} alt="Profile" width={96} height={96} className="object-cover" />
               ) : (
                 <div className="flex items-center justify-center w-full h-full bg-gray-300 text-white text-2xl font-bold">
                   {user.name.charAt(0).toUpperCase()}
@@ -139,6 +165,7 @@ export default function UserProfile() {
             >
               <Camera className="h-4 w-4 mr-2" /> Upload New
             </Button>
+            <input id="profilePicInput" type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
           </div>
         </div>
 
