@@ -42,7 +42,7 @@ export function QRScanner({ onScan, title = 'QR Scanner' }: QRScannerProps) {
         scannerRef.current = null
       }
     }
-  }, [isScanning])
+  }, [isScanning, onScan])
 
   const startScanning = () => {
     setIsScanning(true)

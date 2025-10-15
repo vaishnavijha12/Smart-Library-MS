@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from 'sonner'
 import { User, Mail, Phone, MapPin, CreditCard, IdCard, Camera } from 'lucide-react'
+import Image from 'next/image'
 import { ShimmerPostItem } from "react-shimmer-effects";
 import {useRouter} from 'next/navigation'
 import axios from 'axios'
@@ -123,11 +124,7 @@ export default function UserProfile() {
           <div className="flex flex-col items-center mt-6 md:mt-0">
             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-200">
               {user.imageUrl ? (
-                <img
-                  src={user.imageUrl}
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
+                <Image src={user.imageUrl} alt="Profile" width={96} height={96} className="object-cover" />
               ) : (
                 <div className="flex items-center justify-center w-full h-full bg-gray-300 text-white text-2xl font-bold">
                   {user.name.charAt(0).toUpperCase()}

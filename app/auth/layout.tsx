@@ -1,9 +1,9 @@
 import NavbarSection from '@/components/home/NavbarSection'
 
-export default function({children}){
-    return(
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
+    return (
         <div>
-          <NavbarSection/>
+          <NavbarSection />
             {children}
         </div>
     )

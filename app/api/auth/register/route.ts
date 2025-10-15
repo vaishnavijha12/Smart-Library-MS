@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { hashPassword, signToken, generateStudentId } from '@/lib/auth'
+import type { Role } from '@prisma/client'
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,13 +26,15 @@ export async function POST(request: NextRequest) {
     // Generate student ID for regular users
     const studentId = role === 'USER' ? generateStudentId() : null
 
-    // Create user
+    // Normalize role and create user
+    const normalizedRole = role === 'LIBRARIAN' ? 'LIBRARIAN' : 'USER'
+
     const user = await db.user.create({
       data: {
         email,
         password: hashedPassword,
         name,
-        role: role as any,
+        role: normalizedRole as Role,
         studentId
       }
     })

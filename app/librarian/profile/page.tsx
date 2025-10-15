@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from 'sonner'
 import { User, Mail, Phone, MapPin, Shield, Camera } from 'lucide-react'
+import Image from 'next/image'
 import { ShimmerPostItem } from "react-shimmer-effects";
 
 interface UserProfile {
@@ -46,8 +47,8 @@ export default function LibrarianProfile() {
           profilePic: data.user.profilePic || '',
         })
       }
-    } catch (error) {
-      console.error('Failed to fetch user:', error)
+    } catch (err) {
+      console.error('Failed to fetch user:', err)
     }
   }
 
@@ -69,7 +70,8 @@ export default function LibrarianProfile() {
         const data = await response.json()
         toast.error(data.error || 'Failed to update profile')
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Update profile error:', err)
       toast.error('An error occurred while updating profile')
     } finally {
       setLoading(false)
@@ -118,10 +120,12 @@ export default function LibrarianProfile() {
                   <div className="flex items-center space-x-6">
                     <div className="w-20 h-20 rounded-full bg-neutral-200 overflow-hidden">
                       {formData.profilePic ? (
-                        <img
+                        <Image
                           src={formData.profilePic}
                           alt="Profile"
-                          className="w-full h-full object-cover"
+                          width={80}
+                          height={80}
+                          className="object-cover"
                         />
                       ) : (
                         <User className="w-full h-full p-4 text-neutral-500" />
