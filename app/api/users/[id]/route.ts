@@ -16,7 +16,7 @@ async function deleteHandler(request: NextRequest, context: unknown) {
 async function putHandler(request: NextRequest, context: unknown) {
   const { params } = context as { params: { id: string } }
   const user = (request as unknown as { user?: { userId?: string; role?: string } }).user
-  const { name, phone, address } = await request.json()
+  const { name, phone, address, profilePic } = await request.json()
 
   // Ensure user is present
   if (!user) {
@@ -31,7 +31,7 @@ async function putHandler(request: NextRequest, context: unknown) {
   try {
     const updatedUser = await db.user.update({
       where: { id: params.id },
-      data: { name, phone, address },
+      data: { name, phone, address, profilePic },
       select: {
         id: true,
         name: true,
@@ -41,6 +41,7 @@ async function putHandler(request: NextRequest, context: unknown) {
         role: true,
         studentId: true,
         fine: true,
+        profilePic: true,
       },
     })
 
