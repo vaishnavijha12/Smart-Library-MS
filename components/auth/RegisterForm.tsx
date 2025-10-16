@@ -43,8 +43,12 @@ export default function RegisterForm() {
       startTransition(() => {
         router.push(data.user.role === 'USER' ? '/user/dashboard' : '/librarian/dashboard')
       })
-    } catch (err: any) {
-      setError(err.message || 'Registration failed. Please try again.')
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unexpected error occurred. Please try again.');
+      }
     }
   }
 
