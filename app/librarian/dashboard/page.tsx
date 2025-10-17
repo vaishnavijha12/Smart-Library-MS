@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { QRScanner } from '@/components/librarian/qr-scanner'
 import { toast } from 'sonner'
-import { Book, Users, QrCode, ArrowLeftRight } from 'lucide-react'
+import { Book, Users, QrCode, ArrowLeftRight, BookOpenCheck, BookOpen, FileText } from 'lucide-react'
 import { parseQRData } from '@/lib/qr-utils'
 import { useRouter } from 'next/navigation'
 
@@ -165,70 +165,115 @@ export default function LibrarianDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">      
+    <div className="min-h-screen bg-neutral-50">      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Librarian Dashboard</h1>
-          <p className="text-gray-600">Manage book issues, returns, and library operations</p>
+          <h1 className="text-4xl font-bold text-neutral-900">Librarian Dashboard</h1>
+          <p className="text-neutral-600 mt-2">Manage book issues, returns, and library operations</p>
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Button onClick={() => router.push('/librarian/books')} className="h-18 flex flex-col bg-zinc-800 text-white">
-            <Book className="h-6 w-6 mb-1" />
-            Manage Books
-          </Button>
-          <Button onClick={() => router.push('/librarian/members')} className="h-18 flex flex-col bg-zinc-800 text-white">
-            <Users className="h-6 w-6 mb-1" />
-            Library Members
-          </Button>
-          <Button onClick={() => router.push('/librarian/reports')} className="h-18 flex flex-col bg-zinc-800 text-white">
-            <ArrowLeftRight className="h-6 w-6 mb-1" />
-            Issue Reports
-          </Button>
-          <Button onClick={() => router.push('/librarian/qr-generator')} className="h-18 flex flex-col bg-zinc-800 text-white">
-            <QrCode className="h-6 w-6 mb-1" />
-            QR Generator
-          </Button>
+        <div className="grid grid-cols-1  md:grid-cols-4 gap-6 mb-8">
+          <div className="bg-white rounded-xl justify-center items-center text-center shadow-sm p-6 flex flex-col gap-4">
+            <div className="w-12 h-12 bg-indigo-50 rounded-lg flex items-center justify-center">
+              <BookOpen className="text-indigo-500 h-6 w-6" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-neutral-900">Manage Books</h3>
+              <p className="text-sm text-neutral-600 mt-1">Add or remove books from library</p>
+            </div>
+            <Button onClick={() => router.push('/librarian/books')} 
+              className="mt-auto bg-indigo-400 hover:bg-indigo-500 text-white transition-colors">
+              View Books
+            </Button>
+          </div>
+
+          <div className="bg-white justify-center items-center text-center rounded-xl shadow-sm p-6 flex flex-col gap-4">
+            <div className="w-12 h-12 bg-indigo-50 rounded-lg flex items-center justify-center">
+              <Users className="text-indigo-500 h-6 w-6" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-neutral-900">Library Members</h3>
+              <p className="text-sm text-neutral-600 mt-1">Manage member accounts</p>
+            </div>
+            <Button onClick={() => router.push('/librarian/members')}
+              className="mt-auto  bg-indigo-400 hover:bg-indigo-500 text-white transition-colors">
+              View Members
+            </Button>
+          </div>
+
+          <div className="bg-white justify-center items-center text-center rounded-xl shadow-sm p-6 flex flex-col gap-4">
+            <div className="w-12 h-12 bg-indigo-50 rounded-lg flex items-center justify-center">
+              <FileText className="text-indigo-500 h-6 w-6" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-neutral-900">Issue Reports</h3>
+              <p className="text-sm text-neutral-600 mt-1">Track book circulation</p>
+            </div>
+            <Button onClick={() => router.push('/librarian/reports')}
+              className="mt-auto  bg-indigo-400 hover:bg-indigo-500 text-white transition-colors">
+              View Reports
+            </Button>
+          </div>
+
+          <div className="bg-white justify-center items-center text-center rounded-xl shadow-sm p-6 flex flex-col gap-4">
+            <div className="w-12 h-12 bg-indigo-50 rounded-lg flex items-center justify-center">
+              <QrCode className="text-indigo-500 h-6 w-6" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-neutral-900">QR Generator</h3>
+              <p className="text-sm text-neutral-600 mt-1">Create QR codes</p>
+            </div>
+            <Button onClick={() => router.push('/librarian/qr-generator')}
+              className="mt-auto  bg-indigo-400 hover:bg-indigo-500 text-white transition-colors">
+              Generate QR
+            </Button>
+          </div>
         </div>
 
         <Tabs defaultValue="qr" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger className="bg-white border border-gray-200 rounded-md p-2" value="qr">QR Code Operations</TabsTrigger>
-            <TabsTrigger className="bg-white border border-gray-200 rounded-md p-2" value="manual">Manual Operations</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 p-1 bg-neutral-100 rounded-lg">
+            <TabsTrigger 
+              className="rounded-md px-4 py-2 text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm" 
+              value="qr">QR Code Operations</TabsTrigger>
+            <TabsTrigger 
+              className="rounded-md px-4 py-2 text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm" 
+              value="manual">Manual Operations</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="manual" className="space-y-6 bg-gray-100">
+          <TabsContent value="manual" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Manual Issue */}
-              <Card className="bg-white border border-gray-200 shadow-lg rounded-md p-4">
-                <CardHeader>
-                  <CardTitle>Issue Book</CardTitle>
+              <Card className="bg-white rounded-xl shadow-sm border border-neutral-100">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg font-semibold">Issue Book</CardTitle>
                   <CardDescription>Issue a book to a student manually</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleManualIssue} className="space-y-4">
                     <div>
-                      <Label className="mb-2" htmlFor="studentId">Student ID</Label>
+                      <Label className="text-sm font-medium text-neutral-900" htmlFor="studentId">Student ID</Label>
                       <Input
                         id="studentId"
                         value={issueForm.studentId}
                         onChange={(e) => setIssueForm({ ...issueForm, studentId: e.target.value })}
                         placeholder="Enter student ID"
+                        className="mt-1.5"
                         required
                       />
                     </div>
                     <div>
-                      <Label className="mb-2" htmlFor="bookId">Book ID</Label>
+                      <Label className="text-sm font-medium text-neutral-900" htmlFor="bookId">Book ID</Label>
                       <Input
                         id="bookId"
                         value={issueForm.bookId}
                         onChange={(e) => setIssueForm({ ...issueForm, bookId: e.target.value })}
                         placeholder="Enter book ID"
+                        className="mt-1.5"
                         required
                       />
                     </div>
-                    <Button type="submit" className="w-full bg-zinc-800 text-white">
+                    <Button type="submit" className="w-full  bg-indigo-400 hover:bg-indigo-500 text-white transition-colors">
                       Issue Book
                     </Button>
                   </form>
@@ -236,24 +281,25 @@ export default function LibrarianDashboard() {
               </Card>
 
               {/* Manual Return */}
-              <Card className="bg-white border border-gray-200 shadow-lg rounded-md p-4">
-                <CardHeader>
-                  <CardTitle>Return Book</CardTitle>
+              <Card className="bg-white rounded-xl shadow-sm border border-neutral-100">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg font-semibold">Return Book</CardTitle>
                   <CardDescription>Process book return manually</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleManualReturn} className="space-y-4">
                     <div>
-                      <Label className="mb-2" htmlFor="returnBookId">Book ID</Label>
+                      <Label className="text-sm font-medium text-neutral-900" htmlFor="returnBookId">Book ID</Label>
                       <Input
                         id="returnBookId"
                         value={returnForm.bookId}
                         onChange={(e) => setReturnForm({ bookId: e.target.value })}
                         placeholder="Enter book ID"
+                        className="mt-1.5"
                         required
                       />
                     </div>
-                    <Button type="submit" className="w-full bg-zinc-800 text-white">
+                    <Button type="submit" className="w-full  bg-indigo-400 hover:bg-indigo-500 text-white transition-colors">
                       Return Book
                     </Button>
                   </form>
@@ -262,36 +308,40 @@ export default function LibrarianDashboard() {
             </div>
           </TabsContent>
 
-          <TabsContent value="qr" className="space-y-6 ">
+          <TabsContent value="qr" className="space-y-6">
             {scanMode === 'none' ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Card className="bg-white border border-gray-200 shadow-lg rounded-md p-4">
-                  <CardHeader>
-                    <CardTitle>Quick Issue</CardTitle>
+                <Card className="bg-white rounded-xl shadow-sm border border-neutral-100">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg font-semibold">Quick Issue</CardTitle>
                     <CardDescription>Issue books using QR code scanner</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button onClick={startQuickIssue} className="w-full bg-zinc-800 text-white">
-                      <QrCode className="h-4 w-4 mr-2" />
+                    <Button 
+                      onClick={startQuickIssue} 
+                      className="w-full bg-indigo-500 hover:bg-indigo-600 text-white transition-colors flex items-center justify-center gap-2">
+                      <QrCode className="h-4 w-4" />
                       Start Quick Issue
                     </Button>
-                    <p className="text-sm text-gray-600 mt-2">
+                    <p className="text-sm text-neutral-600 mt-3">
                       First scan user QR, then scan book QR
                     </p>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-white border border-gray-200 shadow-lg rounded-md p-4">
-                  <CardHeader>
-                    <CardTitle>Quick Return</CardTitle>
+                <Card className="bg-white rounded-xl shadow-sm border border-neutral-100">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg font-semibold">Quick Return</CardTitle>
                     <CardDescription>Return books using QR code scanner</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button onClick={startQuickReturn} className="w-full bg-zinc-800 text-white">
-                      <QrCode className="h-4 w-4 mr-2" />
+                    <Button 
+                      onClick={startQuickReturn} 
+                      className="w-full bg-indigo-500 hover:bg-indigo-600 text-white transition-colors flex items-center justify-center gap-2">
+                      <QrCode className="h-4 w-4" />
                       Start Quick Return
                     </Button>
-                    <p className="text-sm text-gray-600 mt-2">
+                    <p className="text-sm text-neutral-600 mt-3">
                       Scan book QR code to return
                     </p>
                   </CardContent>
@@ -299,27 +349,33 @@ export default function LibrarianDashboard() {
               </div>
             ) : (
               <div className="flex justify-center px-4">
-                <div className="w-full max-w-md space-y-4 p-6 bg-white rounded-lg shadow">
-                  <QRScanner
-                    onScan={handleQRScan}
-                    title={
-                      scanMode === 'issue'
-                        ? quickIssueStep === 'user'
-                          ? 'Scan User QR Code'
-                          : 'Scan Book QR Code'
-                        : 'Scan Book QR Code to Return'
-                    }
-                  />
-                  <Button 
-                    onClick={() => {
-                      setScanMode('none')
-                      resetQuickIssue()
-                    }} 
-                    variant="outline" 
-                    className="w-1/2 ml-24 text-white bg-zinc-800"
-                  >
-                    Cancel
-                  </Button>
+                <div className="w-full max-w-md space-y-4">
+                  <Card className="bg-white rounded-xl shadow-sm border border-neutral-100">
+                    <CardContent className="p-6">
+                      <QRScanner
+                        onScan={handleQRScan}
+                        title={
+                          scanMode === 'issue'
+                            ? quickIssueStep === 'user'
+                              ? 'Scan User QR Code'
+                              : 'Scan Book QR Code'
+                            : 'Scan Book QR Code to Return'
+                        }
+                      />
+                      <div className="flex justify-center mt-4">
+                        <Button 
+                          onClick={() => {
+                            setScanMode('none')
+                            resetQuickIssue()
+                          }} 
+                          variant="outline" 
+                          className="bg-neutral-100 hover:bg-neutral-200 text-neutral-900 transition-colors"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
               </div>
             )}
