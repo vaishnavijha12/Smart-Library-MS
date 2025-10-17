@@ -117,6 +117,11 @@ const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
   toast.info('Uploading image...')
   try {
     const formData = new FormData()
+    if (!CLOUDINARY_UPLOAD_PRESET) {
+      console.error("Cloudinary upload preset is not defined in environment variables.");
+      // Optionally, show an error message to the user
+      return; 
+    }
     formData.append('file', file)
     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
 

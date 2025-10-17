@@ -103,6 +103,11 @@ export default function LibrarianProfile() {
   try {
     const formData = new FormData()
     formData.append('file', file)
+    if (!CLOUDINARY_UPLOAD_PRESET) {
+      console.error("Cloudinary upload preset is not defined in environment variables.");
+      // Optionally, show an error message to the user
+      return; 
+    }
     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
 
     const response = await fetch(
