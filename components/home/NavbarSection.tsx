@@ -57,8 +57,8 @@ export default function NavbarSection(){
     }
 
     return(
-        <nav className="w-full">
-        <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+        <nav className="z-1 fixed top-0 w-full border-b bg-background">
+        <div className="max-w-8xl mx-auto px-6 py-3 flex justify-between items-center">
           <div className="flex items-center space-x-2 hover:scale-110 transition-transform duration-300">
             <BookOpenText className="w-8 h-8" />
             <Link
@@ -70,7 +70,7 @@ export default function NavbarSection(){
           </div>
 
           {(user === null) ?
-          (<div className="space-x-4">
+          (<div className="space-x-3">
             <Link
               href="/auth/login"
             >
@@ -88,7 +88,7 @@ export default function NavbarSection(){
           </div>)
           :
           (
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-2">
               <User className="border rounded-full p-2 h-9 w-9" />
               <span className="text-md font-medium">{user?.name}</span>
