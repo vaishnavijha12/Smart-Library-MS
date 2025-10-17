@@ -47,22 +47,22 @@ export default function LoginForm() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-background dark:bg-neutral-950 px-4">
+    <main className="min-h-screen flex items-center justify-center bg-neutral-50 px-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-8 shadow-xl space-y-6"
+        className="w-full max-w-xl bg-white border border-neutral-200 rounded-2xl p-12 shadow-xl space-y-8"
       >
         <div>
-          <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">
+          <h2 className="text-3xl font-bold text-neutral-900 mb-2">
             Welcome Back
           </h2>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          <p className="text-sm text-neutral-600">
             Log in to your LibraryMS account
           </p>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email" className="dark:text-neutral-200">
+          <Label htmlFor="email">
             Email
           </Label>
           <Input
@@ -72,13 +72,13 @@ export default function LoginForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="dark:bg-neutral-800 dark:text-neutral-100"
+            className="bg-white text-neutral-900 placeholder:text-neutral-400 border-neutral-300 h-12"
             autoComplete="email"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password" className="dark:text-neutral-200">
+          <Label htmlFor="password">
             Password
           </Label>
           <Input
@@ -88,7 +88,7 @@ export default function LoginForm() {
             value={formData.password}
             onChange={handleChange}
             required
-            className="dark:bg-neutral-800 dark:text-neutral-100"
+            className="bg-white text-neutral-900 placeholder:text-neutral-400 border-neutral-300 h-12"
             autoComplete="current-password"
           />
         </div>
@@ -99,17 +99,17 @@ export default function LoginForm() {
 
         <Button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all h-12 text-base"
           disabled={isPending}
         >
           {isPending ? 'Logging in…' : 'Log In'}
         </Button>
 
-        <p className="text-center text-sm text-neutral-500 dark:text-neutral-400">
+        <p className="text-center text-sm text-neutral-500">
           Don’t have an account?{' '}
           <Link
             href="/auth/register"
-            className="text-blue-600 dark:text-blue-400 underline"
+            className="text-blue-600 underline"
           >
             Register
           </Link>
