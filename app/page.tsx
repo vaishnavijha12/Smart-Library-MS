@@ -23,7 +23,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-neutral-50 to-neutral-100 min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <NavbarSection/>
       <HeroSection/>
       <FeatureSection/>
