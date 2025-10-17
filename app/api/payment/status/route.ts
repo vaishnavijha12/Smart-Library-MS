@@ -51,7 +51,7 @@ export const POST = async (request: NextRequest) => {
             data: { status: 'SUCCESS' },
         })
 
-      return NextResponse.redirect('http://localhost:3000/user/profile',{
+      return NextResponse.redirect(`${process.env.BASE_URL}/user/profile`,{
         status:301
       })
     } else {

@@ -30,9 +30,9 @@ export const POST = withAuth(async (request: NextRequest) => {
       merchantTransactionId: merchantTransactionId,
 
       amount: user.fine * 100, // Convert to paise (smallest currency unit)
-      redirectUrl: `http://localhost:3000/api/payment/status?id=${merchantTransactionId}`,
+      redirectUrl: `${process.env.BASE_URL}/api/payment/status?id=${merchantTransactionId}`,
       redirectMode: "POST",
-      callbackUrl: `http://localhost:3000/api/payment/status?id=${merchantTransactionId}`,
+      callbackUrl: `${process.env.BASE_URL}/api/payment/status?id=${merchantTransactionId}`,
       paymentInstrument: {
         type: "PAY_PAGE",
       },
