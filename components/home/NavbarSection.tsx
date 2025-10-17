@@ -60,7 +60,7 @@ export default function NavbarSection(){
         <nav className="z-1 fixed top-0 w-full border-b bg-background">
         <div className="max-w-8xl mx-auto px-6 py-3 flex justify-between items-center">
           <div className="flex items-center space-x-2 hover:scale-110 transition-transform duration-300">
-            <BookOpenText className="w-8 h-8" />
+            <BookOpenText className="w-8 h-8 text-purple-400" />
             <Link
               href="/"
               className="text-2xl font-bold tracking-tight"

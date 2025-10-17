@@ -5,12 +5,6 @@ import Link from "next/link";
 export default function HeroSection(){
     return(
       <section className={cn("min-h-screen flex justify-center items-center relative overflow-hidden")}>
-        <div
-          className={cn(
-            "pointer-events-none absolute inset-0 [background-size:40px_40px] select-none",
-            "[background-image:linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)]",
-          )}
-        />
         <div className="relative mx-auto px-6 py-16 flex flex-col justify-center items-center lg:gap-4 md:gap-6 gap-8 text-center">
           <h1 className="mx-auto max-w-6xl text-5xl md:text-6xl font-bold leading-tight">
             Your Digital Gateway to{' '}
