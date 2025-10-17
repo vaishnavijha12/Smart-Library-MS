@@ -30,7 +30,6 @@ export default function LibrarianProfile() {
   })
   const [preview, setPreview] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  // const [uploaded, setUploaded] = useState<string | null>(null)
   const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
   const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
 
