@@ -5,11 +5,10 @@ import {
   Card,
   CardHeader,
   CardTitle,
-  CardDescription,
   CardContent
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Book, User, Clock, IndianRupee, AlertCircle, Plus } from 'lucide-react'
+import { Book, User, IndianRupee, AlertCircle } from 'lucide-react'
 
 interface BookIssue {
   id: string
