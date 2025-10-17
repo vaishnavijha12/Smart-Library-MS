@@ -72,13 +72,13 @@ export default function NavbarSection(){
           (<div className="space-x-4">
             <Link
               href="/auth/login"
-              className="text-black px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+              className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 hover:border-1 transition-all duration-300 hover:border-neutral-400"
             >
               Login
             </Link>
             <Link
               href="/auth/register"
-              className="text-black px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+              className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 hover:border-1 transition-all duration-300 hover:border-neutral-400"
             >
               Sign Up
             </Link>
@@ -95,7 +95,7 @@ export default function NavbarSection(){
                 (
                   <Link
                     href="/user/profile"
-                    className="text-white px-5 py-2.5 rounded-lg  hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+                    className="text-white bg-indigo-400 px-5 py-2.5 rounded-lg hover:bg-indigo-500 hover:border-1 transition-all duration-300 hover:border-neutral-400"
                   >
                     Profile
                   </Link>
@@ -103,7 +103,7 @@ export default function NavbarSection(){
                 (
                   <Link
                     href="/user/dashboard"
-                    className="text-white bg-indigo-400 px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+                    className="text-white bg-indigo-400 px-5 py-2.5 rounded-lg hover:bg-indigo-500 hover:border-1 transition-all duration-300 hover:border-neutral-400"
                   >
                     Home
                   </Link>
