@@ -145,7 +145,7 @@ export default function FeatureSection() {
       {/* New Browse Categories Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Browse by Category
             </h2>
@@ -159,7 +159,7 @@ export default function FeatureSection() {
             {showLeftArrow && (
               <button
                 onClick={() => scroll('left')}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all"
+                className="absolute cursor-pointer left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all"
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="w-6 h-6 text-gray-700" />
@@ -169,7 +169,7 @@ export default function FeatureSection() {
             <div
               ref={scrollContainerRef}
               onScroll={handleScroll}
-              className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+              className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth py-4"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {categories.map((category: Category) => {
@@ -218,7 +218,7 @@ export default function FeatureSection() {
             {showRightArrow && (
               <button
                 onClick={() => scroll('right')}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all"
+                className="absolute cursor-pointer right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all"
                 aria-label="Scroll right"
               >
                 <ChevronRight className="w-6 h-6 text-gray-700" />

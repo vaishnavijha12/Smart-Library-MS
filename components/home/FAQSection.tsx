@@ -25,20 +25,20 @@ const FAQSection: React.FC = () => {
   };
 
   return (
-    <section className="py-12 bg-gray-50 text-gray-800">
+    <section className="py-12 px-4 bg-gray-50 text-gray-800">
       <div className="max-w-3xl mx-auto text-center mb-8">
         <h2 className="text-3xl font-bold mb-2">Frequently Asked Questions</h2>
         <p className="text-gray-600">Common questions about our Library Management System</p>
       </div>
 
-      <div className="max-w-3xl mx-auto space-y-4">
+      <div className="max-w-3xl mx-auto space-y-4 ">
         {faqs.map((faq, index) => (
           <div
             key={index}
             className="border border-gray-200 rounded-lg shadow-sm bg-white"
           >
             <button
-              className="w-full text-left p-4 font-medium flex justify-between items-center"
+              className="w-full text-left p-4 font-medium flex justify-between items-center cursor-pointer"
               onClick={() => toggleFAQ(index)}
             >
               {faq.question}
