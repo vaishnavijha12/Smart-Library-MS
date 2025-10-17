@@ -59,11 +59,11 @@ export default function NavbarSection(){
     return(
         <nav className="bg-white sticky top-0 z-50 backdrop-blur-lg shadow-gray-300 shadow-md bg-opacity-95">
         <div className="container mx-auto px-6 py-6 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <BookOpenText className="text-indigo-400 w-8 h-8 hover:scale-110 transition-transform duration-300" />
+          <div className="flex cursor-pointer items-center space-x-3 group">
+            <BookOpenText className="text-indigo-400 w-8 h-8 group-hover:opacity-60 transition-transform duration-300" />
             <Link
               href="/"
-              className="text-black text-2xl font-bold tracking-tight hover:text-neutral-400 transition-colors duration-300"
+              className="text-black text-2xl font-bold tracking-tight group-hover:opacity-60 transition-colors duration-300"
             >
               LibraryMS
             </Link>
@@ -72,13 +72,13 @@ export default function NavbarSection(){
           (<div className="space-x-4">
             <Link
               href="/auth/login"
-              className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 hover:border-1 transition-all duration-300 hover:border-neutral-400"
+              className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 transition-all duration-300 "
             >
               Login
             </Link>
             <Link
               href="/auth/register"
-              className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 hover:border-1 transition-all duration-300 hover:border-neutral-400"
+              className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 transition-all duration-300 "
             >
               Sign Up
             </Link>
