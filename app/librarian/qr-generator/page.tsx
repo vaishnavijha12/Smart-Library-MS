@@ -110,29 +110,29 @@ export default function QRGenerator() {
   }, [qrType])
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-neutral-50">
       
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">QR Code Generator</h1>
-          <p className="text-gray-600">Generate QR codes for books and users</p>
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-8">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-neutral-900">QR Code Generator</h1>
+          <p className="text-neutral-600">Generate QR codes for books and users</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Generator Form */}
-          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl p-6">
+          <Card className="bg-white border border-neutral-100 shadow-sm rounded-xl p-6">
             <CardHeader>
-              <CardTitle>Generate QR Code</CardTitle>
-              <CardDescription>Create QR codes for quick scanning operations</CardDescription>
+              <CardTitle className="text-lg font-semibold">Generate QR Code</CardTitle>
+              <CardDescription className="text-sm text-neutral-600">Create QR codes for quick scanning operations</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label className="mb-2" htmlFor="type">QR Code Type</Label>
+                <Label className="mb-2 text-sm font-medium text-neutral-900" htmlFor="type">QR Code Type</Label>
                 <Select value={qrType} onValueChange={(value: 'book' | 'user') => setQrType(value)}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full rounded-lg border-neutral-200 shadow-sm">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent  className="bg-white border border-gray-200 shadow-lg rounded-md p-2">
+                  <SelectContent  className="z-[9999] bg-white border border-neutral-100 shadow-lg rounded-md p-2">
                     <SelectItem value="book">Book</SelectItem>
                     <SelectItem value="user">User</SelectItem>
                   </SelectContent>
@@ -141,15 +141,16 @@ export default function QRGenerator() {
 
               {qrType === 'book' ? (
                 <div>
-                  <Label className="mb-2" htmlFor="book">Select Book</Label>
+                  <Label className="mb-2 text-sm font-medium text-neutral-900" htmlFor="book">Select Book</Label>
                   <Select value={selectedId} onValueChange={setSelectedId}>
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full rounded-lg border-neutral-200 shadow-sm">
                       <SelectValue className="" placeholder="Choose a book" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border border-gray-200 shadow-lg rounded-md p-2">
+                    <SelectContent className="z-[9999] bg-white border border-neutral-100 shadow-lg rounded-md p-2">
                       {books.map((book) => (
                         <SelectItem key={book.id} value={book.id}>
                           {book.id}
+                          {book.title}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -157,12 +158,12 @@ export default function QRGenerator() {
                 </div>
               ) : (
                 <div>
-                  <Label className="mb-2" htmlFor="user">Select User</Label>
+                  <Label className="mb-2 text-sm font-medium text-neutral-900" htmlFor="user">Select User</Label>
                   <Select value={selectedId} onValueChange={setSelectedId}>
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full rounded-lg border-neutral-200 shadow-sm">
                       <SelectValue placeholder="Choose a user" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border border-gray-200 shadow-lg rounded-md p-2">
+                    <SelectContent className="z-[9999] bg-white border border-neutral-100 shadow-lg rounded-md p-2">
                       {users.map((user) => (
                         <SelectItem key={user.id} value={user.id}>
                           {user.name} ({user.studentId})
@@ -173,7 +174,7 @@ export default function QRGenerator() {
                 </div>
               )}
 
-              <Button onClick={generateQRCode} disabled={loading || !selectedId} className="w-full bg-zinc-800 text-white">
+              <Button onClick={generateQRCode} disabled={loading || !selectedId} className="w-full bg-indigo-500 hover:bg-indigo-600 text-white">
                 {loading ? 'Generating...' : (
                   <>
                     <QrCode className="h-4 w-4 mr-2" />
@@ -185,10 +186,10 @@ export default function QRGenerator() {
           </Card>
 
           {/* QR Code Display */}
-          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl p-6">
+          <Card className="bg-white border border-neutral-100 shadow-sm rounded-xl p-6">
             <CardHeader>
-              <CardTitle>Generated QR Code</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-lg font-semibold">Generated QR Code</CardTitle>
+              <CardDescription className="text-sm text-neutral-600">
                 {qrCodeUrl ? 'QR code ready for download' : 'QR code will appear here'}
               </CardDescription>
             </CardHeader>
@@ -196,19 +197,21 @@ export default function QRGenerator() {
               {qrCodeUrl ? (
                 <div className="text-center space-y-4">
                   <div className="flex justify-center">
-                    <div className="border rounded-lg p-4 bg-white inline-block">
+                    <div className="border rounded-lg p-6 bg-neutral-50 inline-block">
                       <Image src={qrCodeUrl} alt="Generated QR Code" width={256} height={256} />
                     </div>
                   </div>
-                  <Button onClick={downloadQRCode} className="w-full">
+                  <Button onClick={downloadQRCode} className="w-full bg-indigo-500 hover:bg-indigo-600 text-white">
                     <Download className="h-4 w-4 mr-2" />
                     Download QR Code
                   </Button>
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <QrCode className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-500">Generate a QR code to see it here</p>
+                  <div className="mx-auto w-40 h-40 bg-neutral-100 rounded-lg flex items-center justify-center">
+                    <QrCode className="h-12 w-12 text-neutral-300" />
+                  </div>
+                  <p className="text-neutral-600 mt-4">Generate a QR code to see it here</p>
                 </div>
               )}
             </CardContent>

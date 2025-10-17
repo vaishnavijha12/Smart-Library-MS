@@ -129,75 +129,80 @@ export default function BooksManagement() {
 
           <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
             <DialogTrigger asChild>
-              <Button className="bg-zinc-800 text-white hover:bg-zinc-700">
+              <Button className="bg-indigo-400 text-white hover:bg-indigo-600">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Book
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-md bg-white border border-gray-200 shadow-xl rounded-lg p-8">
               <DialogHeader>
-                <DialogTitle className="text-lg font-semibold">Add New Book</DialogTitle>
+                <DialogTitle className="text-xl font-semibold">Add New Book</DialogTitle>
                 <DialogDescription className="text-sm text-gray-500">
                   Enter book details below to add it to the library
                 </DialogDescription>
               </DialogHeader>
-              <form onSubmit={handleAddBook} className="space-y-4">
-                <div>
-                  <Label htmlFor="title">Title</Label>
+              <form onSubmit={handleAddBook} className="space-y-4 mt-6">
+                <div className="space-y-2">
+                  <Label htmlFor="title" className="text-sm font-medium text-neutral-900">Title</Label>
                   <Input
                     id="title"
                     value={bookForm.title}
                     onChange={(e) =>
                       setBookForm({ ...bookForm, title: e.target.value })
                     }
+                    className="border-neutral-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 rounded-lg shadow-sm"
                     required
                   />
                 </div>
-                <div>
-                  <Label htmlFor="author">Author</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="author" className="text-sm font-medium text-neutral-900">Author</Label>
                   <Input
                     id="author"
                     value={bookForm.author}
                     onChange={(e) =>
                       setBookForm({ ...bookForm, author: e.target.value })
                     }
+                    className="border-neutral-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 rounded-lg shadow-sm"
                     required
                   />
                 </div>
-                <div>
-                  <Label htmlFor="isbn">ISBN</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="isbn" className="text-sm font-medium text-neutral-900">ISBN</Label>
                   <Input
                     id="isbn"
                     value={bookForm.isbn}
                     onChange={(e) =>
                       setBookForm({ ...bookForm, isbn: e.target.value })
                     }
+                    className="border-neutral-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 rounded-lg shadow-sm"
                     required
                   />
                 </div>
-                <div>
-                  <Label htmlFor="category">Category</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="category" className="text-sm font-medium text-neutral-900">Category</Label>
                   <Input
                     id="category"
                     value={bookForm.category}
                     onChange={(e) =>
                       setBookForm({ ...bookForm, category: e.target.value })
                     }
+                    className="border-neutral-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 rounded-lg shadow-sm"
                     required
                   />
                 </div>
-                <div>
-                  <Label htmlFor="description">Description</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="description" className="text-sm font-medium text-neutral-900">Description</Label>
                   <Input
                     id="description"
                     value={bookForm.description}
                     onChange={(e) =>
                       setBookForm({ ...bookForm, description: e.target.value })
                     }
+                    className="border-neutral-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 rounded-lg shadow-sm"
                   />
                 </div>
-                <div>
-                  <Label htmlFor="quantity">Quantity</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="quantity" className="text-sm font-medium text-neutral-900">Quantity</Label>
                   <Input
                     id="quantity"
                     type="number"
@@ -209,12 +214,13 @@ export default function BooksManagement() {
                         quantity: parseInt(e.target.value),
                       })
                     }
+                    className="border-neutral-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 rounded-lg shadow-sm"
                     required
                   />
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-zinc-800 text-white hover:bg-zinc-700"
+                  className="w-full bg-indigo-500 text-white hover:bg-indigo-600 transition-colors mt-4"
                 >
                   Add Book
                 </Button>

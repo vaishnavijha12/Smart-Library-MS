@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import {BookOpen,User} from 'lucide-react'
+import {BookA, BookOpen,BookOpenText,BookOpenTextIcon,User} from 'lucide-react'
 import {useEffect,useState} from 'react'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
@@ -57,13 +57,13 @@ export default function NavbarSection(){
     }
 
     return(
-        <nav className="bg-neutral-900 sticky top-0 z-50 backdrop-blur-lg bg-opacity-95">
+        <nav className="bg-white sticky top-0 z-50 backdrop-blur-lg shadow-gray-300 shadow-md bg-opacity-95">
         <div className="container mx-auto px-6 py-6 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <BookOpen className="text-neutral-300 w-8 h-8 hover:scale-110 transition-transform duration-300" />
+            <BookOpenText className="text-indigo-400 w-8 h-8 hover:scale-110 transition-transform duration-300" />
             <Link
               href="/"
-              className="text-white text-2xl font-bold tracking-tight hover:text-neutral-400 transition-colors duration-300"
+              className="text-black text-2xl font-bold tracking-tight hover:text-neutral-400 transition-colors duration-300"
             >
               LibraryMS
             </Link>
@@ -72,13 +72,13 @@ export default function NavbarSection(){
           (<div className="space-x-4">
             <Link
               href="/auth/login"
-              className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+              className="text-black px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
             >
               Login
             </Link>
             <Link
               href="/auth/register"
-              className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+              className="text-black px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
             >
               Sign Up
             </Link>
@@ -86,16 +86,16 @@ export default function NavbarSection(){
           :
           (
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-white">
-              <User className="h-4 w-4" />
-              <span className="text-sm font-medium">{user.name}</span>
+            <div className="flex items-center space-x-2 text-black">
+              <User className=" text-gray-500 h-5 w-5" />
+              <span className="text-md font-medium">{user.name}</span>
             </div>
             {(user.role === "USER") ?
               ( (!isProfile) ?
                 (
                   <Link
                     href="/user/profile"
-                    className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+                    className="text-white px-5 py-2.5 rounded-lg  hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
                   >
                     Profile
                   </Link>
@@ -103,7 +103,7 @@ export default function NavbarSection(){
                 (
                   <Link
                     href="/user/dashboard"
-                    className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+                    className="text-white bg-indigo-400 px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
                   >
                     Home
                   </Link>
@@ -113,7 +113,7 @@ export default function NavbarSection(){
                 (
                   <Link
                     href="/librarian/profile"
-                    className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+                    className="text-white px-5 text-md  bg-indigo-400 py-2.5 rounded-lg hover:bg-indigo-500 hover:border-1 transition-all duration-300 hover:border-neutral-400"
                   >
                     Profile
                   </Link>
@@ -121,7 +121,7 @@ export default function NavbarSection(){
                 (
                   <Link
                     href="/librarian/dashboard"
-                    className="text-white px-5 py-2.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+                    className="text-white px-5 py-2.5 rounded-lg bg-indigo-400 hover:bg-indigo-500  border-neutral-500 transition-all duration-300 hover:border-neutral-400"
                   >
                     Home
                   </Link>
@@ -131,7 +131,7 @@ export default function NavbarSection(){
             
             <Button
               onClick={logoutHandler}
-              className="text-white px-5.5 py-5.5 rounded-lg hover:bg-neutral-800 border-2 border-neutral-500 transition-all duration-300 hover:border-neutral-400"
+              className="text-black bg-gray-200 px-5.5 text-md  py-5.5 rounded-lg hover:bg-indigo-400 hover:text-white   transition-all duration-300 "
             >
               Logout
             </Button>
