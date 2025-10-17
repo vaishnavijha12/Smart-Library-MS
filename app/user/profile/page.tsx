@@ -28,6 +28,7 @@ interface UserProfile {
 export default function UserProfile() {
   const router = useRouter()
   const [user, setUser] = useState<UserProfile | null>(null)
+  const [_uploaded, setUploaded] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     name: '',
     phone: '',

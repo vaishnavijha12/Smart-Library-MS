@@ -22,6 +22,7 @@ interface UserProfile {
 
 export default function LibrarianProfile() {
   const [user, setUser] = useState<UserProfile | null>(null)
+  const [_uploaded, setUploaded] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
