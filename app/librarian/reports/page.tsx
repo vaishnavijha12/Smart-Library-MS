@@ -88,7 +88,7 @@ export default function IssueReports() {
           {[
             { title: 'TOTAL ISSUES', value: bookIssues.length, icon: <Book className="h-6 w-6" />, color: 'bg-blue-50' },
             { title: 'OVERDUE BOOKS', value: overdueBooks, icon: <AlertCircle className="h-6 w-6 text-red-500" />, color: 'bg-red-50' },
-            { title: 'PENDING FINES', value: `$${totalFines.toFixed(2)}`, icon: <IndianRupee className="h-6 w-6 text-yellow-600" />, color: 'bg-yellow-50' },
+            { title: 'PENDING FINES', value: `₹${totalFines.toFixed(2)}`, icon: <IndianRupee className="h-6 w-6 text-yellow-600" />, color: 'bg-yellow-50' },
             { title: 'ACTIVE USERS', value: activeUsers, icon: <User className="h-6 w-6 text-green-600" />, color: 'bg-green-50' },
           ].map(({ title, value, icon, color }) => (
             <Card key={title} className="shadow-none border-0 rounded-lg">
