@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import {BookA, BookOpen,BookOpenText,BookOpenTextIcon,User} from 'lucide-react'
+import {BookOpenText,User} from 'lucide-react'
 import {useEffect,useState} from 'react'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'

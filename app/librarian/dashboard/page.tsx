@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { QRScanner } from '@/components/librarian/qr-scanner'
 import { toast } from 'sonner'
-import { Book, Users, QrCode, ArrowLeftRight, BookOpenCheck, BookOpen, FileText } from 'lucide-react'
+import {Users, QrCode,BookOpen, FileText } from 'lucide-react'
 import { parseQRData } from '@/lib/qr-utils'
 import { useRouter } from 'next/navigation'
 
