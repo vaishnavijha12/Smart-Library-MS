@@ -34,7 +34,6 @@ export default function UserProfile() {
     address: ''
   })
   const [preview, setPreview] = useState<string | null>(null)
-  const [uploaded, setUploaded] = useState<string | null>(null)
 
   const [loading, setLoading] = useState(false)
 
