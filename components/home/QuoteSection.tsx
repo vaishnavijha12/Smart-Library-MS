@@ -2,7 +2,7 @@ import {Quote} from 'lucide-react'
 
 export default function QuoteSection(){
     return(
-        <section className="min-h-screen relative flex justify-center items-center py-16">
+        <section className="relative bg-neutral-800 text-white py-16">
         <div className="container mx-auto px-6 text-center relative">
           <Quote className="text-neutral-400 w-12 h-12 mb-6" />
           <blockquote className="text-3xl md:text-4xl italic font-light mb-8 leading-relaxed">

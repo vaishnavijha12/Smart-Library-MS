@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
+import React, { useState } from "react";
 
 const FAQSection: React.FC = () => {
   const faqs = [
@@ -19,27 +18,38 @@ const FAQSection: React.FC = () => {
     },
   ];
 
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
-    <section className="min-h-screen py-12 flex flex-col justify-center items-center">
-      <div className="w-full px-2 mx-auto text-center mb-8">
+    <section className="py-12 bg-gray-50 text-gray-800">
+      <div className="max-w-3xl mx-auto text-center mb-8">
         <h2 className="text-3xl font-bold mb-2">Frequently Asked Questions</h2>
-        <p className="text-neutral-400 max-w-[70%] mx-auto">Common questions about our Library Management System</p>
+        <p className="text-gray-600">Common questions about our Library Management System</p>
       </div>
 
-      <Accordion
-        type="single"
-        collapsible
-        className="max-w-[90%] w-2xl"
-      >
-        {faqs.map((faq) => (
-          <AccordionItem value={faq.question}>
-            <AccordionTrigger>{faq.question}</AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-4">
-                {faq.answer}
-            </AccordionContent>
-          </AccordionItem>
+      <div className="max-w-3xl mx-auto space-y-4">
+        {faqs.map((faq, index) => (
+          <div
+            key={index}
+            className="border border-gray-200 rounded-lg shadow-sm bg-white"
+          >
+            <button
+              className="w-full text-left p-4 font-medium flex justify-between items-center"
+              onClick={() => toggleFAQ(index)}
+            >
+              {faq.question}
+              <span>{openIndex === index ? "−" : "+"}</span>
+            </button>
+            {openIndex === index && (
+              <div className="p-4 pt-0 text-gray-600">{faq.answer}</div>
+            )}
+          </div>
         ))}
-      </Accordion>
+      </div>
     </section>
   );
 };

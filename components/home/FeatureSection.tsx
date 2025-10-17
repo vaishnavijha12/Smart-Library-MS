@@ -3,9 +3,8 @@ import FeatureCard from '@/components/home/FeatureCard'
 
 export default function FeatureSection(){
     return(
-      <section id="features" className="min-h-screen py-16 flex flex-col gap-12 justify-center items-center">
-        <h2 className='text-3xl font-bold'>Features</h2>
-        <div className="max-w-6xl container mx-auto px-6 grid md:grid-cols-3 gap-8">
+        <section id="features" className="py-16 bg-white">
+        <div className="container mx-auto px-6 grid md:grid-cols-3 gap-8">
           <FeatureCard
             icon={Search}
             title="Smart Search"
