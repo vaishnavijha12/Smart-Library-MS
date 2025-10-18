@@ -24,8 +24,6 @@ const FAQSection: React.FC = () => {
     },
   ];
 
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
   return (
     <section className="py-20 mb-20 flex flex-col justify-center items-center">
       <div className="w-full px-2 mx-auto text-center mb-8">
