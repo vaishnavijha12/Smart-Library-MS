@@ -44,6 +44,7 @@ const FAQSection: React.FC = () => {
             </AccordionContent>
           </AccordionItem>
         ))}
+        </Accordion>
       </div>
     </section>
   );
