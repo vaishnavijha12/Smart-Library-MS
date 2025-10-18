@@ -5,11 +5,10 @@ import {
   Card,
   CardHeader,
   CardTitle,
-  CardDescription,
   CardContent
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Book, User, Clock, IndianRupee, AlertCircle } from 'lucide-react'
+import { Book, User, IndianRupee, AlertCircle } from 'lucide-react'
 
 interface BookIssue {
   id: string
@@ -60,104 +59,114 @@ export default function IssueReports() {
   const overdueBooks = bookIssues.filter(issue => issue.isOverdue).length
   const activeUsers = new Set(bookIssues.map(issue => issue.user.id)).size
 
+  const getStatusBadge = (issue: BookIssue) => {
+    if (issue.isOverdue) {
+      return <Badge variant="destructive">Overdue</Badge>
+    } else if (new Date(issue.dueDate) > new Date()) {
+      const daysUntilDue = Math.ceil((new Date(issue.dueDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+      if (daysUntilDue <= 3) {
+        return <Badge variant="secondary">Due Soon</Badge>
+      } else {
+        return <Badge variant="default">On Time</Badge>
+      }
+    }
+    return <Badge variant="default">Renewed</Badge>
+  }
+
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-12">
+    <main className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="mb-10">
-          <h1 className="text-4xl font-bold text-zinc-800 mb-2">Book Issue Reports</h1>
-          <p className="text-gray-600">Live snapshot of all issued books & member dues.</p>
+          <h1 className="text-5xl font-bold text-zinc-900 mb-3">Book Issue Reports</h1>
+          <p className="text-gray-600 text-lg">A comprehensive overview of all issued books and their current status.</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
           {[
-            { title: 'Total Issued', value: bookIssues.length, icon: <Book className="h-5 w-5" /> },
-            { title: 'Overdue Books', value: overdueBooks, icon: <Clock className="h-5 w-5" /> },
-            { title: 'Pending Fines', value: `₹${totalFines.toFixed(2)}`, icon: <IndianRupee className="h-5 w-5" /> },
-            { title: 'Active Users', value: activeUsers, icon: <User className="h-5 w-5" /> },
-          ].map(({ title, value, icon }) => (
-            <Card
-              key={title}
-              className="shadow-sm hover:shadow-md transition rounded-lg border border-zinc-200 bg-white"
-            >
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-semibold text-gray-700">{title}</CardTitle>
-                <div className="text-zinc-500">{icon}</div>
-              </CardHeader>
-              <CardContent>
-                <div className={`text-3xl font-bold ${title.includes('Overdue') ? 'text-red-600' : 'text-zinc-800'}`}>
-                  {value}
+            { title: 'TOTAL ISSUES', value: bookIssues.length, icon: <Book className="h-6 w-6" />, color: 'bg-blue-50' },
+            { title: 'OVERDUE BOOKS', value: overdueBooks, icon: <AlertCircle className="h-6 w-6 text-red-500" />, color: 'bg-red-50' },
+            { title: 'PENDING FINES', value: `₹${totalFines.toFixed(2)}`, icon: <IndianRupee className="h-6 w-6 text-yellow-600" />, color: 'bg-yellow-50' },
+            { title: 'ACTIVE USERS', value: activeUsers, icon: <User className="h-6 w-6 text-green-600" />, color: 'bg-green-50' },
+          ].map(({ title, value, icon, color }) => (
+            <Card key={title} className="shadow-none border-0 rounded-lg">
+              <CardContent className={`p-6 ${color} rounded-lg`}>
+                <div className="flex items-start gap-4">
+                  <div className="text-gray-400">{icon}</div>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 tracking-wider uppercase">{title}</p>
+                    <p className="text-3xl font-bold text-zinc-900 mt-1">{value}</p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        {/* Details */}
-        <Card className="shadow-sm border border-zinc-200 bg-white">
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold text-zinc-800">Issued Books Details</CardTitle>
-            <CardDescription className="text-gray-600">
-              Detailed list of books, borrowers, and due status.
-            </CardDescription>
+        {/* Table */}
+        <Card className="shadow-lg border-0">
+          <CardHeader className="border-b border-gray-200 pb-6">
+            <CardTitle className="text-2xl font-bold text-zinc-900">Book Details</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-0">
             {bookIssues.length > 0 ? (
-              <div className="space-y-4">
-                {bookIssues.map((issue) => {
-                  const dueDate = new Date(issue.dueDate)
-                  const issuedDate = new Date(issue.issueDate)
-                  const book = issue.bookCopy.book
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-200 bg-gray-50">
+                      <th className="text-left p-6 text-xs font-semibold text-gray-700 uppercase tracking-wider">Book Details</th>
+                      <th className="text-left p-6 text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                      <th className="text-left p-6 text-xs font-semibold text-gray-700 uppercase tracking-wider">Borrower</th>
+                      <th className="text-left p-6 text-xs font-semibold text-gray-700 uppercase tracking-wider">Issue Date</th>
+                      <th className="text-left p-6 text-xs font-semibold text-gray-700 uppercase tracking-wider">Due Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bookIssues.map((issue) => {
+                      const dueDate = new Date(issue.dueDate)
+                      const issuedDate = new Date(issue.issueDate)
+                      const book = issue.bookCopy.book
 
-                  return (
-                    <div
-                      key={issue.id}
-                      className={`p-4 border rounded-lg flex flex-col md:flex-row md:items-center md:justify-between gap-4 ${
-                        issue.isOverdue ? 'border-red-300 bg-red-50' : 'border-zinc-200 bg-white'
-                      }`}
-                    >
-                      {/* Book Info */}
-                      <div className="flex-1">
-                        <h4 className="text-lg font-bold text-zinc-800">{book.title}</h4>
-                        <p className="text-sm text-gray-700">by {book.author}</p>
-                        <p className="text-xs text-gray-500">ISBN: {book.isbn} | Copy ID: {issue.bookCopy.id}</p>
-                      </div>
-
-                      {/* User Info */}
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <User className="h-4 w-4 text-gray-500" />
-                          <span className="font-medium">{issue.user.name}</span>
-                        </div>
-                        <p className="text-sm text-gray-600">ID: {issue.user.studentId}</p>
-                        <p className="text-sm text-gray-600">{issue.user.email}</p>
-                        <Badge variant={issue.user.fine > 0 ? 'destructive' : 'default'} className="mt-2">
-                          Total Fine: ₹{issue.user.fine.toFixed(2)}
-                        </Badge>
-                      </div>
-
-                      {/* Dates & Status */}
-                      <div className="flex-1">
-                        <div className="space-y-1">
-                          <p className="text-sm text-gray-600">
-                            <span className="font-medium">Issued:</span> {issuedDate.toLocaleDateString()}
-                          </p>
-                          <p className={`text-sm ${issue.isOverdue ? 'text-red-600 font-semibold' : 'text-gray-700'}`}>
-                            <span className="font-medium">Due:</span> {dueDate.toLocaleDateString()}
-                          </p>
-                          {issue.isOverdue && (
-                            <div className="mt-1 flex items-center gap-2">
-                              <Badge variant="destructive">{issue.daysOverdue} days overdue</Badge>
-                              <AlertCircle className="h-4 w-4 text-red-500" />
-                              <span className="text-sm text-red-600 font-medium">+₹{issue.overdueFine.toFixed(2)}</span>
+                      return (
+                        <tr key={issue.id} className="border-b border-gray-100 hover:bg-gray-50 transition">
+                          <td className="p-6">
+                            <div>
+                              <h4 className="font-bold text-zinc-900">{book.title}</h4>
+                              <p className="text-sm text-gray-600">by {book.author}</p>
+                              <p className="text-xs text-gray-500">ISBN: {book.isbn}</p>
                             </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
+                          </td>
+                          <td className="p-6">
+                            {getStatusBadge(issue)}
+                          </td>
+                          <td className="p-6">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-sm font-semibold text-white">
+                                {issue.user.name.split(' ').map(n => n[0]).join('')}
+                              </div>
+                              <div>
+                                <p className="font-medium text-zinc-900">{issue.user.name}</p>
+                                <p className="text-sm text-gray-600">ID: {issue.user.studentId}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="p-6">
+                            <p className="text-sm text-gray-700">{issuedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+                          </td>
+                          <td className="p-6">
+                            <p className={`text-sm font-medium ${issue.isOverdue ? 'text-red-600' : 'text-orange-600'}`}>
+                              {dueDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                            </p>
+                            {issue.isOverdue && (
+                              <p className="text-xs text-red-600 mt-1">{issue.daysOverdue} days overdue</p>
+                            )}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
               </div>
             ) : (
               <div className="text-center py-12">
@@ -167,6 +176,9 @@ export default function IssueReports() {
             )}
           </CardContent>
         </Card>
+
+        {/* Issue New Book Button */}
+        
       </div>
     </main>
   )

@@ -53,35 +53,35 @@ export default function RegisterForm() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-background dark:bg-neutral-950 px-4">
+    <main className="min-h-screen flex items-center justify-center bg-neutral-50 px-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-8 shadow-xl space-y-6"
+        className="w-full max-w-xl bg-white border border-neutral-200 rounded-2xl p-12 shadow-xl space-y-8"
       >
         <div>
-          <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">
+          <h2 className="text-3xl font-bold text-neutral-900 mb-2">
             Create your account
           </h2>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          <p className="text-sm text-neutral-600">
             Join LibraryMS to manage your books smartly.
           </p>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="name" className="dark:text-neutral-200">Name</Label>
+          <Label htmlFor="name">Name</Label>
           <Input
             id="name"
             placeholder="John Doe"
             value={formData.name}
             onChange={handleChange}
             required
-            className="dark:bg-neutral-800 dark:text-neutral-100"
+            className="bg-white text-neutral-900 placeholder:text-neutral-400 border-neutral-300 h-12"
             autoComplete="name"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email" className="dark:text-neutral-200">Email</Label>
+          <Label htmlFor="email">Email</Label>
           <Input
             id="email"
             type="email"
@@ -89,13 +89,13 @@ export default function RegisterForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="dark:bg-neutral-800 dark:text-neutral-100"
+            className="bg-white text-neutral-900 placeholder:text-neutral-400 border-neutral-300 h-12"
             autoComplete="email"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password" className="dark:text-neutral-200">Password</Label>
+          <Label htmlFor="password">Password</Label>
           <Input
             id="password"
             type="password"
@@ -103,21 +103,21 @@ export default function RegisterForm() {
             value={formData.password}
             onChange={handleChange}
             required
-            className="dark:bg-neutral-800 dark:text-neutral-100"
+            className="bg-white text-neutral-900 placeholder:text-neutral-400 border-neutral-300 h-12"
             autoComplete="new-password"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="role" className="dark:text-neutral-200">Role</Label>
+          <Label htmlFor="role">Role</Label>
           <Select
             value={formData.role}
             onValueChange={(value) => setFormData((prev) => ({ ...prev, role: value }))}
           >
-            <SelectTrigger className="dark:bg-neutral-800 dark:text-neutral-100">
+            <SelectTrigger className="bg-white text-neutral-900 border-neutral-300 h-12">
               <SelectValue placeholder="Select your role" />
             </SelectTrigger>
-            <SelectContent className="dark:bg-neutral-800 dark:text-neutral-100">
+            <SelectContent className="bg-white text-neutral-900">
               <SelectItem value="USER">Student</SelectItem>
               <SelectItem value="LIBRARIAN">Librarian</SelectItem>
             </SelectContent>
@@ -134,9 +134,9 @@ export default function RegisterForm() {
           {isPending ? 'Creating Account…' : 'Create Account'}
         </Button>
 
-        <p className="text-center text-sm text-neutral-500 dark:text-neutral-400">
+        <p className="text-center text-sm text-neutral-500">
           Already have an account?{' '}
-          <Link href="/auth/login" className="text-blue-600 dark:text-blue-400 underline">
+          <Link href="/auth/login" className="text-blue-600 underline">
             Log in
           </Link>
         </p>

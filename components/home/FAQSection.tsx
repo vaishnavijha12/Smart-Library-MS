@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
+import React, { useState } from "react";
 
 const FAQSection: React.FC = () => {
   const faqs = [
@@ -18,6 +17,12 @@ const FAQSection: React.FC = () => {
       answer: "Yes, books can be renewed once unless another member has requested the same book.",
     },
   ];
+
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
     <section className="py-20 mb-20 flex flex-col justify-center items-center">
@@ -39,7 +44,7 @@ const FAQSection: React.FC = () => {
             </AccordionContent>
           </AccordionItem>
         ))}
-      </Accordion>
+      </div>
     </section>
   );
 };

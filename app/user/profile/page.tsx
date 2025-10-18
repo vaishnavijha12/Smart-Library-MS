@@ -28,13 +28,20 @@ interface UserProfile {
 export default function UserProfile() {
   const router = useRouter()
   const [user, setUser] = useState<UserProfile | null>(null)
+  const [_uploaded, setUploaded] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     address: ''
   })
   const [preview, setPreview] = useState<string | null>(null)
+
   const [loading, setLoading] = useState(false)
+
+  const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!
+  const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!
+
+
 
   useEffect(() => {
     fetchUser()
@@ -91,24 +98,71 @@ export default function UserProfile() {
     input?.click()
   }
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0]
+  if (!file) return
 
-    // Basic size check (2MB)
-    const maxSize = 2 * 1024 * 1024
-    if (file.size > maxSize) {
-      toast.error('Image too large. Max 2MB.')
-      return
-    }
-
-    const reader = new FileReader()
-    reader.onload = () => {
-      const result = reader.result as string
-      setPreview(result)
-    }
-    reader.readAsDataURL(file)
+  // Basic size check (2MB)
+  const maxSize = 2 * 1024 * 1024
+  if (file.size > maxSize) {
+    toast.error('Image too large. Max 2MB.')
+    return
   }
+
+  // Preview using FileReader
+  const reader = new FileReader()
+  reader.onload = () => setPreview(reader.result as string)
+  reader.readAsDataURL(file)
+
+  // Upload to Cloudinary
+  toast.info('Uploading image...')
+  try {
+    const formData = new FormData()
+    if (!CLOUDINARY_UPLOAD_PRESET) {
+      console.error("Cloudinary upload preset is not defined in environment variables.");
+      // Optionally, show an error message to the user
+      return; 
+    }
+    formData.append('file', file)
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+      { method: 'POST', body: formData }
+    )
+
+    if (!response.ok) throw new Error('Upload failed')
+
+    const data = await response.json()
+    const imageUrl = data.secure_url
+    setUploaded(imageUrl)
+    toast.success('Image uploaded successfully!')
+    console.log('Cloudinary URL:', imageUrl)
+
+    // Update database immediately
+    if (user?.id) {
+      const updatePayload = { profilePic: imageUrl }
+      const res = await fetch(`/api/users/${user.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatePayload)
+      })
+      if (res.ok) {
+        toast.success('Profile picture updated in database!')
+        // Optionally refresh user data
+        fetchUser()
+      } else {
+        toast.error('Failed to update profile picture in DB')
+      }
+    }
+
+  } catch (err) {
+    console.error(err)
+    toast.error('Failed to upload image.')
+  }
+}
+
+
 
   const HandleFinePayment = async () => {
     const data = {

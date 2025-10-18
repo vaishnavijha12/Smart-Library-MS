@@ -16,7 +16,7 @@ interface User {
 export default function NavbarSection(){
     const pathname = usePathname()
     const router = useRouter();
-    const [user,setUser] = useState<User | null>(null);
+  const [user,setUser] = useState<User | null>(null);
     const [isProfile,setIsProfile] = useState<boolean>(false);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export default function NavbarSection(){
     useEffect(() => {
       if(pathname === "/librarian/dashboard" || pathname === "/user/dashboard"){
         setIsProfile(false)
-      } else {
+      } else{
         setIsProfile(true)
       }
     }, [pathname])
@@ -60,59 +60,52 @@ export default function NavbarSection(){
         <nav className="z-1 fixed top-0 w-full border-b bg-background">
         <div className="max-w-8xl mx-auto px-6 py-3 flex justify-between items-center">
           <div className="flex items-center space-x-2 hover:scale-110 transition-transform duration-300">
-            <BookOpenText className="w-8 h-8 text-primary" />
+            <BookOpenText className="w-8 h-8 text-purple-400" />
             <Link
               href="/"
-              className="text-2xl font-bold tracking-tight"
+              className="text-black text-2xl font-bold tracking-tight group-hover:opacity-60 transition-colors duration-300"
             >
               LibraryMS
             </Link>
           </div>
-
           {(user === null) ?
-          (<div className="space-x-3">
+          (<div className="space-x-4">
             <Link
               href="/auth/login"
+              className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 transition-all duration-300 "
             >
-              <Button variant="outline">
-                Login
-              </Button>
+              Login
             </Link>
             <Link
               href="/auth/register"
+              className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 transition-all duration-300 "
             >
-              <Button variant="default">
-                Sign Up
-              </Button>
+              Sign Up
             </Link>
           </div>)
           :
           (
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center space-x-2">
-              <User className="border rounded-full p-2 h-9 w-9" />
-              <span className="text-md font-medium">{user?.name}</span>
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 text-black">
+              <User className=" text-gray-500 h-5 w-5" />
+              <span className="text-md font-medium">{user.name}</span>
             </div>
-            {(user?.role === "USER") ?
-              ((!isProfile) ?
+            {(user.role === "USER") ?
+              ( (!isProfile) ?
                 (
                   <Link
                     href="/user/profile"
+                    className="text-white bg-indigo-400 px-5 py-2.5 rounded-lg hover:bg-indigo-500 hover:border-1 transition-all duration-300 hover:border-neutral-400"
                   >
-                    <Button 
-                      variant="default"
-                    >
-                      Profile
-                    </Button>
+                    Profile
                   </Link>
                 ):
                 (
                   <Link
                     href="/user/dashboard"
+                    className="text-white bg-indigo-400 px-5 py-2.5 rounded-lg hover:bg-indigo-500 hover:border-1 transition-all duration-300 hover:border-neutral-400"
                   >
-                    <Button variant="outline">
-                      Home
-                    </Button>
+                    Home
                   </Link>
                 )
               ) :
@@ -120,27 +113,25 @@ export default function NavbarSection(){
                 (
                   <Link
                     href="/librarian/profile"
+                    className="text-white px-5 text-md  bg-indigo-400 py-2.5 rounded-lg hover:bg-indigo-500 hover:border-1 transition-all duration-300 hover:border-neutral-400"
                   >
-                    <Button variant="default">
-                      Profile
-                    </Button>
+                    Profile
                   </Link>
                 ) :
                 (
                   <Link
                     href="/librarian/dashboard"
+                    className="text-white px-5 py-2.5 rounded-lg bg-indigo-400 hover:bg-indigo-500  border-neutral-500 transition-all duration-300 hover:border-neutral-400"
                   >
-                    <Button variant="outline">
-                      Home
-                    </Button>
+                    Home
                   </Link>
                 )
               )
             }
             
             <Button
-              variant="default"
               onClick={logoutHandler}
+              className="text-black bg-gray-200 px-5.5 text-md  py-5.5 rounded-lg hover:bg-indigo-400 hover:text-white   transition-all duration-300 "
             >
               Logout
             </Button>
