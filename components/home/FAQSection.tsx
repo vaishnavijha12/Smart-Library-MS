@@ -25,29 +25,24 @@ const FAQSection: React.FC = () => {
   };
 
   return (
-    <section className="py-12 px-4 bg-gray-50 text-gray-800">
-      <div className="max-w-3xl mx-auto text-center mb-8">
-        <h2 className="text-3xl font-bold mb-2">Frequently Asked Questions</h2>
-        <p className="text-gray-600">Common questions about our Library Management System</p>
+    <section className="py-20 mb-20 flex flex-col justify-center items-center">
+      <div className="w-full px-2 mx-auto text-center mb-8">
+        <h2 className="text-4xl font-bold mb-2">Frequently Asked Questions</h2>
+        <p className="text-muted-foreground max-w-[70%] mx-auto">Common questions about our Library Management System</p>
       </div>
 
-      <div className="max-w-3xl mx-auto space-y-4 ">
+      <Accordion
+        type="single"
+        collapsible
+        className="max-w-[90%] w-2xl"
+      >
         {faqs.map((faq, index) => (
-          <div
-            key={index}
-            className="border border-gray-200 rounded-lg shadow-sm bg-white"
-          >
-            <button
-              className="w-full text-left p-4 font-medium flex justify-between items-center cursor-pointer"
-              onClick={() => toggleFAQ(index)}
-            >
-              {faq.question}
-              <span>{openIndex === index ? "−" : "+"}</span>
-            </button>
-            {openIndex === index && (
-              <div className="p-4 pt-0 text-gray-600">{faq.answer}</div>
-            )}
-          </div>
+          <AccordionItem key={index} value={faq.question}>
+            <AccordionTrigger>{faq.question}</AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-4 text-muted-foreground">
+                {faq.answer}
+            </AccordionContent>
+          </AccordionItem>
         ))}
       </div>
     </section>

@@ -6,6 +6,7 @@ import FAQSection from '@/components/home/FAQSection'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { verifyToken } from '@/lib/auth'
+import { cn } from '@/lib/utils'
 
 export default async function Home() {
   const cookieStore = await cookies()
@@ -23,13 +24,11 @@ export default async function Home() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-neutral-50 to-neutral-100 min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       <NavbarSection/>
       <HeroSection/>
       <FeatureSection/>
       <QuoteSection/>
-
-      {/* FAQ Section */}
       <FAQSection/>
     </div>
   )

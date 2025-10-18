@@ -57,10 +57,10 @@ export default function NavbarSection(){
     }
 
     return(
-        <nav className="bg-white sticky top-0 z-50 backdrop-blur-lg shadow-gray-300 shadow-md bg-opacity-95">
-        <div className="container mx-auto px-6 py-6 flex justify-between items-center">
-          <div className="flex cursor-pointer items-center space-x-3 group">
-            <BookOpenText className="text-indigo-400 w-8 h-8 group-hover:opacity-60 transition-transform duration-300" />
+        <nav className="z-1 fixed top-0 w-full border-b bg-background">
+        <div className="max-w-8xl mx-auto px-6 py-3 flex justify-between items-center">
+          <div className="flex items-center space-x-2 hover:scale-110 transition-transform duration-300">
+            <BookOpenText className="w-8 h-8 text-purple-400" />
             <Link
               href="/"
               className="text-black text-2xl font-bold tracking-tight group-hover:opacity-60 transition-colors duration-300"
