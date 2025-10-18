@@ -81,8 +81,8 @@ export default function MembersManagement() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F7F6FB] py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-[#F7F6FB]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
         <div className="mb-10">
           <h1 className="text-4xl font-bold text-white mb-2 bg-[#6E3DA5] rounded-xl p-6">Library Members</h1>
