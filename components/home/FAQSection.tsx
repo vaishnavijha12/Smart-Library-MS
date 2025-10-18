@@ -132,7 +132,7 @@ const FAQSection: React.FC = () => {
             <div className="space-y-1">
               <p className="font-bold text-lg">Still have questions?</p>
               <p className="text-sm text-muted-foreground">
-                We're here to help you get the most out of our library system.
+                We&apos;re here to help you get the most out of our library system.
               </p>
             </div>
             <div className="flex gap-3 flex-wrap justify-center">

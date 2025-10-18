@@ -4,7 +4,7 @@ import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Github, Linkedin, Twitter, Mail } from "lucide-react";
-
+import {Link} from 'next/link'
 export default function FooterSection() {
   const year = new Date().getFullYear();
 
@@ -45,11 +45,11 @@ export default function FooterSection() {
           <div>
             <h4 className="mb-4 text-sm font-semibold tracking-wide text-foreground">Quick Links</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="/" className="hover:text-foreground transition-colors">Home</a></li>
-              <li><a href="/librarian/dashboard" className="hover:text-foreground transition-colors">Librarian Dashboard</a></li>
-              <li><a href="/user/dashboard" className="hover:text-foreground transition-colors">User Dashboard</a></li>
-              <li><a href="/auth/login" className="hover:text-foreground transition-colors">Login</a></li>
-              <li><a href="/auth/register" className="hover:text-foreground transition-colors">Register</a></li>
+              <li><Link href="/" className="hover:text-foreground transition-colors">Home</Link></li>
+              <li><Link href="/librarian/dashboard" className="hover:text-foreground transition-colors">Librarian Dashboard</Link></li>
+              <li><Link href="/user/dashboard" className="hover:text-foreground transition-colors">User Dashboard</Link></li>
+              <li><Link href="/auth/login" className="hover:text-foreground transition-colors">Login</Link></li>
+              <li><Link href="/auth/register" className="hover:text-foreground transition-colors">Register</Link></li>
             </ul>
           </div>
 

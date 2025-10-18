@@ -9,8 +9,8 @@ export default function QuoteSection(){
         <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
         
         {/* Decorative quote marks */}
-        <div className="absolute top-8 left-8 text-primary/20 text-9xl font-serif leading-none select-none hidden md:block">"</div>
-        <div className="absolute bottom-8 right-8 text-primary/20 text-9xl font-serif leading-none select-none hidden md:block rotate-180">"</div>
+        <div className="absolute top-8 left-8 text-primary/20 text-9xl font-serif leading-none select-none hidden md:block">&quot;</div>
+        <div className="absolute bottom-8 right-8 text-primary/20 text-9xl font-serif leading-none select-none hidden md:block rotate-180">&quot;</div>
         
         <div className="container relative mx-auto px-6 text-center max-w-5xl">
           <div className="bg-card/50 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-border/50">
