@@ -9,10 +9,10 @@ interface FeatureCardProps {
 
 export default function FeatureCard({ icon: Icon, title, description }: FeatureCardProps) {
   return (
-    <Card className='w-full max-w-sm select-none hover:scale-105 duration-300'>
+    <Card className='h-full w-full max-w-sm select-none hover:scale-105 duration-300'>
       <CardHeader className='gap-4'>
         <div className='flex gap-4 items-center'>
-          <Icon />
+          <Icon className='text-primary'/>
           <CardTitle>{title}</CardTitle>
         </div>
         <CardDescription>{description}</CardDescription>

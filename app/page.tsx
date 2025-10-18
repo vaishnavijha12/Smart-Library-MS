@@ -3,10 +3,10 @@ import NavbarSection from '@/components/home/NavbarSection'
 import FeatureSection from '@/components/home/FeatureSection'
 import QuoteSection from '@/components/home/QuoteSection'
 import FAQSection from '@/components/home/FAQSection'
-import Separator from '@/components/ui/separator';
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { verifyToken } from '@/lib/auth'
+import { cn } from '@/lib/utils'
 
 export default async function Home() {
   const cookieStore = await cookies()
@@ -24,19 +24,11 @@ export default async function Home() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       <NavbarSection/>
-      <Separator />
-
       <HeroSection/>
-      <Separator />
-
       <FeatureSection/>
-      <Separator />
-
       <QuoteSection/>
-      <Separator />
-
       <FAQSection/>
     </div>
   )
