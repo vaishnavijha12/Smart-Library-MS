@@ -4,7 +4,7 @@ import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Github, Linkedin, Twitter, Mail } from "lucide-react";
-import {Link} from 'next/link'
+import Link from 'next/link'
 export default function FooterSection() {
   const year = new Date().getFullYear();
 
