@@ -32,6 +32,10 @@ interface Book {
   description?: string
   quantity: number
   available: number
+  copies: {
+    id: string
+    status: string
+  }[]
 }
 
 export default function BooksManagement() {
@@ -117,8 +121,8 @@ export default function BooksManagement() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* Header */}
         <div className="flex justify-between items-center mb-10">
@@ -288,7 +292,25 @@ export default function BooksManagement() {
                 {book.description && (
                   <p className="text-sm text-gray-600">{book.description}</p>
                 )}
-                <p className="text-xs text-gray-400">ID: {book.id}</p>
+                <div className="space-y-1">
+                  <p className="text-xs text-gray-500 font-medium">Available Copy IDs:</p>
+                  <div className="flex flex-wrap gap-1">
+                    {book.copies
+                      .filter(copy => copy.status === 'AVAILABLE')
+                      .map((copy, index) => (
+                        <span 
+                          key={copy.id}
+                          className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded border"
+                        >
+                          {copy.id}
+                        </span>
+                      ))
+                    }
+                    {book.copies.filter(copy => copy.status === 'AVAILABLE').length === 0 && (
+                      <span className="text-xs text-gray-400 italic">No copies available</span>
+                    )}
+                  </div>
+                </div>
               </CardContent>
             </Card>
           ))}
