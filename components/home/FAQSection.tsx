@@ -49,7 +49,7 @@ const FAQSection: React.FC = () => {
   }, [query, faqs]);
 
   return (
-    <section className="relative py-20 mb-12 flex flex-col items-center overflow-hidden">
+    <section id="faq" className="relative py-20 mb-12 flex flex-col items-center overflow-hidden">
       {/* Enhanced decorative background */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute left-1/2 top-[-15%] h-96 w-96 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
@@ -132,7 +132,7 @@ const FAQSection: React.FC = () => {
             <div className="space-y-1">
               <p className="font-bold text-lg">Still have questions?</p>
               <p className="text-sm text-muted-foreground">
-                We&apos;re here to help you get the most out of our library system.
+                We're here to help you get the most out of our library system.
               </p>
             </div>
             <div className="flex gap-3 flex-wrap justify-center">
