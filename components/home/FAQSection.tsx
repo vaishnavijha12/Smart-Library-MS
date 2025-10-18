@@ -1,6 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const FAQSection: React.FC = () => {
   const faqs = [

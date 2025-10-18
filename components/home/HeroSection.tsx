@@ -1,4 +1,6 @@
-
+import { cn } from "@/lib/utils";
+import Link from 'next/link';
+import { Button } from "@/components/ui/button";
 export default function HeroSection(){
     return(
       <section className={cn("min-h-screen flex justify-center items-center relative overflow-hidden")}>
