@@ -297,7 +297,7 @@ export default function BooksManagement() {
                   <div className="flex flex-wrap gap-1">
                     {book.copies
                       .filter(copy => copy.status === 'AVAILABLE')
-                      .map((copy, index) => (
+                      .map((copy) => (
                         <span 
                           key={copy.id}
                           className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded border"
