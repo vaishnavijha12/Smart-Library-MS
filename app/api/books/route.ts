@@ -14,10 +14,34 @@ async function getHandler(request: NextRequest) {
         { category: { contains: search, mode: 'insensitive' } }
       ]
     },
+    include: {
+      copies: true
+    },
     orderBy: { createdAt: 'desc' }
   })
 
-  return Response.json({ books })
+  // Transform the data to include book copy information
+  const booksWithCopies = books.map(book => {
+    const availableCopies = book.copies.filter(copy => copy.status === 'AVAILABLE').length
+    const totalCopies = book.copies.length
+    
+    return {
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      isbn: book.isbn,
+      category: book.category,
+      description: book.description,
+      quantity: totalCopies,
+      available: availableCopies,
+      copies: book.copies.map(copy => ({
+        id: copy.id,
+        status: copy.status
+      }))
+    }
+  })
+
+  return Response.json({ books: booksWithCopies })
 }
 
 async function postHandler(request: NextRequest) {

@@ -61,7 +61,7 @@ export default function UserDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-10">
           <h1 className="text-4xl font-bold text-zinc-800 mb-2">
             Student Dashboard
@@ -73,29 +73,33 @@ export default function UserDashboard() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <Card className="shadow-md hover:shadow-lg transition-all duration-300">
+          <Card className="shadow-md hover:-translate-y-3  border-l-indigo-500 border-4 hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-700">
+              <CardTitle className="text-md font-large text-gray-700">
                 Books Issued
               </CardTitle>
-              <Book className="h-5 w-5 text-gray-500" />
+              <div className="h-8 w-8 bg-blue-500 rounded flex items-center justify-center">
+                <Book className="h-4 w-4 text-white" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-extrabold text-zinc-800">
+              <div className="text-3xl font-extrabold text-purple-600">
                 {bookIssues.length}
               </div>
             </CardContent>
           </Card>
 
-          <Card className="shadow-md hover:shadow-lg transition-all duration-300">
+          <Card className="hover:-translate-y-3 border-l-red-500 border-4 shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-700">
+              <CardTitle className="text-md font-large text-gray-700">
                 Overdue Books
               </CardTitle>
-              <Clock className="h-5 w-5 text-gray-500" />
+              <div className="h-8 w-8 bg-red-500 rounded-full flex items-center justify-center">
+                <Clock className="h-4 w-4 text-white" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-extrabold text-zinc-800">
+              <div className="text-3xl font-extrabold text-red-500">
                 {
                   bookIssues.filter(
                     (issue) => new Date(issue.dueDate) < new Date()
@@ -105,15 +109,17 @@ export default function UserDashboard() {
             </CardContent>
           </Card>
 
-          <Card className="shadow-md hover:shadow-lg transition-all duration-300">
+          <Card className="hover:-translate-y-3 border-l-orange-400 border-4 shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-700">
+              <CardTitle className="text-md font-large text-gray-700">
                 Total Fine
               </CardTitle>
-              <IndianRupee className="h-5 w-5 text-gray-500" />
+              <div className="h-8 w-8 bg-orange-400 rounded-full flex items-center justify-center">
+                <IndianRupee className="h-4 w-4 text-white" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-extrabold text-zinc-800">
+              <div className="text-3xl font-extrabold text-orange-400">
                 ₹{user?.fine || 0}
               </div>
             </CardContent>
@@ -122,13 +128,18 @@ export default function UserDashboard() {
 
         {/* Currently Issued Books */}
         <Card className="shadow-md mb-12">
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold text-zinc-800">
-              Currently Issued Books
-            </CardTitle>
-            <CardDescription className="text-gray-600">
-              Books you have currently borrowed from the library.
-            </CardDescription>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="text-lg font-semibold text-zinc-800">
+                Currently Issued Books
+              </CardTitle>
+              <CardDescription className="text-gray-600">
+                Books you have currently borrowed from the library.
+              </CardDescription>
+            </div>
+            <a href="#" className="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+              View All →
+            </a>
           </CardHeader>
           <CardContent>
             {bookIssues.length > 0 ? (
@@ -148,7 +159,7 @@ export default function UserDashboard() {
                       }`}
                     >
                       <div className="mb-2 md:mb-0">
-                        <h4 className="font-semibold text-zinc-800">
+                        <h4 className="font-bold text-indigo-700">
                           {book.title}
                         </h4>
                         <p className="text-sm text-gray-600">
@@ -161,7 +172,7 @@ export default function UserDashboard() {
                       <div className="text-right">
                         <p
                           className={`text-sm font-medium ${
-                            isOverdue ? 'text-red-600' : 'text-gray-700'
+                            isOverdue ? 'text-red-600' : 'text-gray-800 '
                           }`}
                         >
                           Due: {dueDate.toLocaleDateString()}

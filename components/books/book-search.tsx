@@ -57,7 +57,7 @@ export function BookSearch() {
         {books.map((book) => (
           <Card key={book.id} className="hover:shadow-lg transition-shadow">
             <CardHeader>
-              <CardTitle className="text-lg">{book.title}</CardTitle>
+              <CardTitle className="text-lg font-bold text-indigo-800">{book.title}</CardTitle>
               <CardDescription>by {book.author}</CardDescription>
             </CardHeader>
             <CardContent>
@@ -67,14 +67,11 @@ export function BookSearch() {
                   <span className="text-sm text-gray-600">ISBN: {book.isbn}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge variant="secondary">{book.category}</Badge>
-                  <Badge variant={book.available > 0 ? 'default' : 'destructive'}>
-                    {book.available}/{book.quantity} Available
-                  </Badge>
+                  <Badge variant="secondary" className="bg-blue-100 text-blue-800">{book.category}</Badge>
+                  {book.description && (
+                    <Badge variant="secondary" className="bg-blue-100 text-blue-800">{book.description}</Badge>
+                  )}
                 </div>
-                {book.description && (
-                  <p className="text-sm text-gray-600 mt-2">{book.description}</p>
-                )}
               </div>
             </CardContent>
           </Card>

@@ -22,7 +22,7 @@ interface UserProfile {
 
 export default function LibrarianProfile() {
   const [user, setUser] = useState<UserProfile | null>(null)
-  const [uploaded, setUploaded] = useState<string | null>(null)
+  const [, setUploaded] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -160,7 +160,7 @@ export default function LibrarianProfile() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-10">
           <h1 className="text-3xl font-bold text-neutral-900">Librarian Profile</h1>
           <p className="text-neutral-600">Manage your personal information and account settings</p>

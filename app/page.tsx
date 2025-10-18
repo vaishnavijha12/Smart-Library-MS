@@ -7,7 +7,6 @@ import FooterSection from '@/components/home/FooterSection'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { verifyToken } from '@/lib/auth'
-import { cn } from '@/lib/utils'
 
 export default async function Home() {
   const cookieStore = await cookies()
