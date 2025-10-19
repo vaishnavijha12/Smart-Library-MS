@@ -56,29 +56,61 @@ export default function NavbarSection(){
       }
     }
 
+    const scrollToSection = (sectionId: string) => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const navbarHeight = 80; // Approximate navbar height
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - navbarHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+
     return(
-        <nav className="z-1 fixed top-0 w-full border-b bg-background">
+        <nav className="z-50 fixed top-0 w-full border-b bg-background/95 backdrop-blur-sm shadow-sm">
         <div className="max-w-8xl mx-auto px-6 py-3 flex justify-between items-center">
-          <div className="flex items-center space-x-2 hover:scale-110 transition-transform duration-300">
-            <BookOpenText className="w-8 h-8 text-purple-400" />
-            <Link
-              href="/"
-              className="text-black text-2xl font-bold tracking-tight group-hover:opacity-60 transition-colors duration-300"
-            >
-              LibraryMS
-            </Link>
+          <div className="flex items-center space-x-8">
+            <div className="flex items-center space-x-2 hover:scale-110 transition-transform duration-300">
+              <BookOpenText className="w-8 h-8 text-purple-400" />
+              <Link
+                href="/"
+                className="text-black text-2xl font-bold tracking-tight group-hover:opacity-60 transition-colors duration-300"
+              >
+                LibraryMS
+              </Link>
+            </div>
+            {(user === null) && (
+              <div className="hidden md:flex items-center space-x-6">
+                <button
+                  onClick={() => scrollToSection('features')}
+                  className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300"
+                >
+                  Features
+                </button>
+                <button
+                  onClick={() => scrollToSection('faq')}
+                  className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300"
+                >
+                  FAQ
+                </button>
+              </div>
+            )}
           </div>
           {(user === null) ?
-          (<div className="space-x-4">
+          (<div className="flex items-center space-x-4">
             <Link
               href="/auth/login"
-              className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 transition-all duration-300 "
+              className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 transition-all duration-300 inline-block"
             >
               Login
             </Link>
             <Link
               href="/auth/register"
-              className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 transition-all duration-300 "
+              className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 transition-all duration-300 inline-block"
             >
               Sign Up
             </Link>
