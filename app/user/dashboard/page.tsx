@@ -26,13 +26,27 @@ interface BookIssue {
   }
 }
 
+interface RecommendationItem {
+  id: string
+  title: string
+  author: string
+  isbn: string
+  category: string
+  description?: string | null
+  available: number
+  quantity: number
+  reason: string
+}
+
 export default function UserDashboard() {
   const [bookIssues, setBookIssues] = useState<BookIssue[]>([])
   const [user, setUser] = useState<{ fine: number } | null>(null)
+  const [recommendations, setRecommendations] = useState<RecommendationItem[]>([])
 
   useEffect(() => {
     fetchMyBooks()
     fetchUser()
+    fetchRecommendations()
   }, [])
 
   const fetchMyBooks = async () => {
@@ -44,6 +58,18 @@ export default function UserDashboard() {
       }
     } catch (error) {
       console.error('Failed to fetch books:', error)
+    }
+  }
+
+  const fetchRecommendations = async () => {
+    try {
+      const response = await fetch('/api/users/recommendations')
+      if (response.ok) {
+        const data = await response.json()
+        setRecommendations(data.recommendations || [])
+      }
+    } catch (error) {
+      console.error('Failed to fetch recommendations:', error)
     }
   }
 
@@ -191,6 +217,38 @@ export default function UserDashboard() {
               <p className="text-gray-500">
                 You currently have no books issued.
               </p>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Recommendations */}
+        <Card className="shadow-md mb-12">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="text-lg font-semibold text-zinc-800">
+                Recommended For You
+              </CardTitle>
+              <CardDescription className="text-gray-600">
+                Suggestions based on your borrowing history.
+              </CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {recommendations.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {recommendations.map((rec) => (
+                  <div key={rec.id} className="p-4 rounded-lg border border-zinc-200 bg-white">
+                    <h4 className="font-bold text-indigo-700 mb-1">{rec.title}</h4>
+                    <p className="text-sm text-gray-700 mb-1">by {rec.author}</p>
+                    <p className="text-xs text-gray-500 mb-2">Category: {rec.category}</p>
+                    <p className="text-xs text-gray-500 mb-2">ISBN: {rec.isbn}</p>
+                    <p className="text-xs text-emerald-700 mb-2">{rec.available} of {rec.quantity} copies available</p>
+                    <p className="text-xs text-gray-600 italic">{rec.reason}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500">No recommendations yet. Borrow some books to get suggestions.</p>
             )}
           </CardContent>
         </Card>
