@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Search, Book} from 'lucide-react'
+import Image from 'next/image'
 
 interface Book {
   id: string
@@ -13,6 +14,7 @@ interface Book {
   isbn: string
   category: string
   description?: string
+  imageUrl?: string
   available: number
   quantity: number
 }
@@ -60,6 +62,20 @@ export function BookSearch() {
               <CardTitle className="text-lg font-bold text-indigo-800">{book.title}</CardTitle>
               <CardDescription>by {book.author}</CardDescription>
             </CardHeader>
+            {book.imageUrl && (
+              <div className="px-6 pb-4">
+                <Image
+                  src={book.imageUrl}
+                  alt={`${book.title} cover`}
+                  width={400}
+                  height={192}
+                  className="w-full h-48 object-cover rounded-lg shadow-sm"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                  }}
+                />
+              </div>
+            )}
             <CardContent>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
