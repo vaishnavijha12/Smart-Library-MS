@@ -229,11 +229,11 @@ export default function BooksManagement() {
                     id="quantity"
                     type="number"
                     min="1"
-                    value={bookForm.quantity}
+                    value={bookForm.quantity === 0 ? "" : bookForm.quantity}
                     onChange={(e) =>
                       setBookForm({
                         ...bookForm,
-                        quantity: parseInt(e.target.value),
+                        quantity: e.target.value === "" ? 0 : parseInt(e.target.value, 10),
                       })
                     }
                     className="border-neutral-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 rounded-lg shadow-sm"
