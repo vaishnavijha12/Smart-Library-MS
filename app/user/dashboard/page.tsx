@@ -237,14 +237,33 @@ export default function UserDashboard() {
             {recommendations.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {recommendations.map((rec) => (
-                  <div key={rec.id} className="p-4 rounded-lg border border-zinc-200 bg-white">
-                    <h4 className="font-bold text-indigo-700 mb-1">{rec.title}</h4>
-                    <p className="text-sm text-gray-700 mb-1">by {rec.author}</p>
-                    <p className="text-xs text-gray-500 mb-2">Category: {rec.category}</p>
-                    <p className="text-xs text-gray-500 mb-2">ISBN: {rec.isbn}</p>
-                    <p className="text-xs text-emerald-700 mb-2">{rec.available} of {rec.quantity} copies available</p>
-                    <p className="text-xs text-gray-600 italic">{rec.reason}</p>
-                  </div>
+                  <Card key={rec.id} className="hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <CardTitle className="text-lg font-bold text-indigo-800">{rec.title}</CardTitle>
+                      <CardDescription>by {rec.author}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Book className="h-4 w-4 text-gray-500" />
+                          <span className="text-sm text-gray-600">ISBN: {rec.isbn}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="inline-flex items-center rounded bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5">
+                            {rec.category}
+                          </span>
+                        </div>
+                        {rec.description && (
+                          <div className="flex items-center gap-2 mt-2">
+                            <span className="inline-flex items-center rounded bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5">
+                              {rec.description}
+                            </span>
+                          </div>
+                        )}
+                        <p className="text-xs text-gray-600 italic">{rec.reason}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             ) : (
