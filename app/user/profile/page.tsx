@@ -202,9 +202,9 @@ const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
           <div className="flex flex-col items-center mt-6 md:mt-0">
             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-200">
               {preview ? (
-                <Image src={preview} alt="Profile" width={96} height={96} className="object-cover" />
+                <Image src={preview} alt="Profile" width={96} height={96} className="rounded-full w-full h-full " />
               ) : user.profilePic ? (
-                <Image src={user.profilePic} alt="Profile" width={96} height={96} className="object-cover" />
+                <Image src={user.profilePic} alt="Profile" width={96} height={96} className="rounded-full w-full h-full " />
               ) : (
                 <div className="flex items-center justify-center w-full h-full bg-gray-300 text-white text-2xl font-bold">
                   {user.name.charAt(0).toUpperCase()}
