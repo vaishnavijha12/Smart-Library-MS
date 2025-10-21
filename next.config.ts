@@ -23,7 +23,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  /* config options here */
+  reactStrictMode: true,
+  swcMinify: true,
+  experimental: {
+    // keep the edge-runtime/esm optimizations available for newer Next versions
+    esmExternals: 'loose',
+  },
 };
 
 export default nextConfig;

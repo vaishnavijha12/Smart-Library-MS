@@ -1,4 +1,4 @@
-'use client'
+ 'use client'
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
@@ -8,7 +8,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { toast } from 'sonner'
 import { User, Mail, Phone, MapPin, CreditCard, IdCard, Camera } from 'lucide-react'
 import Image from 'next/image'
-import { ShimmerPostItem } from "react-shimmer-effects";
+import dynamic from 'next/dynamic'
+const ShimmerPostItem = dynamic(
+  () => import('react-shimmer-effects').then((mod) => mod.ShimmerPostItem),
+  { ssr: false }
+)
 import {useRouter} from 'next/navigation'
 import axios from 'axios'
 
