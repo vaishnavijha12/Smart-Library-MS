@@ -279,7 +279,7 @@ export default function BooksManagement() {
                   <span className="text-sm text-gray-700">ISBN: {book.isbn}</span>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="secondary" className="text-xs">
+                  <Badge variant="secondary" className="text-xs break-words whitespace-normal max-w-full">
                     {book.category}
                   </Badge>
                   <Badge
