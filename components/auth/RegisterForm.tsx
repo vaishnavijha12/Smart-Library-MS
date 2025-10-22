@@ -1,29 +1,32 @@
-'use client'
+ 'use client'
 
 import Link from 'next/link'
-import React, { useState, useTransition } from 'react'
+import React, { useState, useTransition, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children?: React.ReactNode
 }
-export const Button = ({ children, className, ...props }: ButtonProps) => (
+const ButtonComponent = ({ children, className, ...props }: ButtonProps) => (
   <button {...props} className={`rounded-lg font-semibold transition-all ${className}`}>
     {children}
   </button>
 )
+export const Button = React.memo(ButtonComponent)
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>
-export const Input = (props: InputProps) => (
+const InputComponent = (props: InputProps) => (
   <input {...props} className={`w-full rounded-lg px-4 py-3 border placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition ${props.className}`} />
 )
+export const Input = React.memo(InputComponent)
 
 type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement> & {
   children?: React.ReactNode
 }
-export const Label = ({ children, className, ...props }: LabelProps) => (
+const LabelComponent = ({ children, className, ...props }: LabelProps) => (
   <label {...props} className={`font-medium text-gray-700 ${className}`}>{children}</label>
 )
+export const Label = React.memo(LabelComponent)
 
 type SelectProps = {
   value: string
@@ -31,7 +34,7 @@ type SelectProps = {
   options: { value: string; label: string }[]
   className?: string
 }
-export const Select = ({ value, onValueChange, options, className }: SelectProps) => (
+const SelectComponent = ({ value, onValueChange, options, className }: SelectProps) => (
   <select
     value={value}
     onChange={(e) => onValueChange(e.target.value)}
@@ -44,6 +47,7 @@ export const Select = ({ value, onValueChange, options, className }: SelectProps
     ))}
   </select>
 )
+export const Select = React.memo(SelectComponent)
 
 export default function RegisterForm() {
   const router = useRouter()
@@ -51,10 +55,15 @@ export default function RegisterForm() {
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // stable handlers to prevent unnecessary re-renders in memoized children
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target
     setFormData((prev) => ({ ...prev, [id]: value }))
-  }
+  }, [])
+
+  const onRoleChange = useCallback((value: string) => {
+    setFormData((prev) => ({ ...prev, role: value }))
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -110,12 +119,15 @@ export default function RegisterForm() {
           <div>
             <Label htmlFor="role">Role</Label>
             <Select
-              value={formData.role}
-              onValueChange={(value) => setFormData((prev) => ({ ...prev, role: value }))}
-              options={[
-                { value: 'USER', label: 'Student' },
-                { value: 'LIBRARIAN', label: 'Librarian' },
-              ]}
+                value={formData.role}
+                onValueChange={onRoleChange}
+                options={useMemo(
+                  () => [
+                    { value: 'USER', label: 'Student' },
+                    { value: 'LIBRARIAN', label: 'Librarian' },
+                  ],
+                  []
+                )}
             />
           </div>
         </div>

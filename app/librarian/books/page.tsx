@@ -22,6 +22,7 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
 import { Plus, Search, Trash2, Book } from 'lucide-react'
+import Image from 'next/image'
 
 interface Book {
   id: string
@@ -30,6 +31,7 @@ interface Book {
   isbn: string
   category: string
   description?: string
+  imageUrl?: string
   quantity: number
   available: number
   copies: {
@@ -48,6 +50,7 @@ export default function BooksManagement() {
     isbn: '',
     category: '',
     description: '',
+    imageUrl: '',
     quantity: 1,
   })
 
@@ -88,6 +91,7 @@ export default function BooksManagement() {
           isbn: '',
           category: '',
           description: '',
+          imageUrl: '',
           quantity: 1,
         })
         fetchBooks()
@@ -206,16 +210,30 @@ export default function BooksManagement() {
                   />
                 </div>
                 <div className="space-y-2">
+                  <Label htmlFor="imageUrl" className="text-sm font-medium text-neutral-900">Image URL</Label>
+                  <Input
+                    id="imageUrl"
+                    type="url"
+                    placeholder="https://example.com/book-image.jpg"
+                    value={bookForm.imageUrl}
+                    onChange={(e) =>
+                      setBookForm({ ...bookForm, imageUrl: e.target.value })
+                    }
+                    className="border-neutral-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 rounded-lg shadow-sm"
+                  />
+                  <p className="text-xs text-gray-500">Paste the image URL from Amazon or other book websites</p>
+                </div>
+                <div className="space-y-2">
                   <Label htmlFor="quantity" className="text-sm font-medium text-neutral-900">Quantity</Label>
                   <Input
                     id="quantity"
                     type="number"
                     min="1"
-                    value={bookForm.quantity}
+                    value={bookForm.quantity === 0 ? "" : bookForm.quantity}
                     onChange={(e) =>
                       setBookForm({
                         ...bookForm,
-                        quantity: parseInt(e.target.value),
+                        quantity: e.target.value === "" ? 0 : parseInt(e.target.value, 10),
                       })
                     }
                     className="border-neutral-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 rounded-lg shadow-sm"
@@ -273,6 +291,20 @@ export default function BooksManagement() {
                   </Button>
                 </div>
               </CardHeader>
+              {book.imageUrl && (
+                <div className="px-6 pb-4">
+                  <Image
+                    src={book.imageUrl}
+                    alt={`${book.title} cover`}
+                    width={400}
+                    height={192}
+                    className="w-full h-48 object-cover rounded-lg shadow-sm"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none'
+                    }}
+                  />
+                </div>
+              )}
               <CardContent className="space-y-3">
                 <div className="flex items-center gap-2">
                   <Book className="h-4 w-4 text-gray-500" />

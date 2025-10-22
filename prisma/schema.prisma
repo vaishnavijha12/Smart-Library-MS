@@ -33,6 +33,7 @@ model Book {
   isbn        String       @unique
   category    String
   description String?
+  imageUrl    String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   copies      BookCopy[]
