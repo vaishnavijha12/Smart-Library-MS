@@ -88,6 +88,7 @@ export default function UserDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
         <div className="mb-10">
           <h1 className="text-4xl font-bold text-zinc-800 mb-2">
             Student Dashboard
@@ -99,7 +100,7 @@ export default function UserDashboard() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <Card className="shadow-md hover:-translate-y-3  border-l-indigo-500 border-4 hover:shadow-lg transition-all duration-300">
+          <Card className="shadow-md hover:-translate-y-3 border-l-indigo-500 border-4 hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-md font-large text-gray-700">
                 Books Issued
@@ -126,11 +127,9 @@ export default function UserDashboard() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-extrabold text-red-500">
-                {
-                  bookIssues.filter(
-                    (issue) => new Date(issue.dueDate) < new Date()
-                  ).length
-                }
+                {bookIssues.filter(
+                  (issue) => new Date(issue.dueDate) < new Date()
+                ).length}
               </div>
             </CardContent>
           </Card>
@@ -163,56 +162,57 @@ export default function UserDashboard() {
                 Books you have currently borrowed from the library.
               </CardDescription>
             </div>
-            <a href="#" className="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+            <a
+              href="#"
+              className="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+            >
               View All →
             </a>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             {bookIssues.length > 0 ? (
-              <div className="space-y-4">
-                {bookIssues.map((issue) => {
-                  const dueDate = new Date(issue.dueDate)
-                  const isOverdue = dueDate < new Date()
-                  const book = issue.bookCopy.book
+              bookIssues.map((issue) => {
+                const dueDate = new Date(issue.dueDate)
+                const isOverdue = dueDate < new Date()
+                const book = issue.bookCopy.book
 
-                  return (
-                    <div
-                      key={issue.id}
-                      className={`flex flex-col md:flex-row md:items-center justify-between p-4 rounded-lg border transition-all ${
-                        isOverdue
-                          ? 'border-red-400 bg-red-50'
-                          : 'border-zinc-200 bg-white'
-                      }`}
-                    >
-                      <div className="mb-2 md:mb-0">
-                        <h4 className="font-bold text-indigo-700">
-                          {book.title}
-                        </h4>
-                        <p className="text-sm text-gray-600">
-                          by {book.author}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          ISBN: {book.isbn}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p
-                          className={`text-sm font-medium ${
-                            isOverdue ? 'text-red-600' : 'text-gray-800 '
-                          }`}
-                        >
-                          Due: {dueDate.toLocaleDateString()}
-                        </p>
-                        {isOverdue && (
-                          <p className="text-xs font-semibold text-red-600">
-                            Overdue!
-                          </p>
-                        )}
-                      </div>
+                return (
+                  <div
+                    key={issue.id}
+                    className={`flex flex-col md:flex-row md:items-center justify-between p-4 rounded-lg border transition-all ${
+                      isOverdue
+                        ? 'border-red-400 bg-red-50'
+                        : 'border-zinc-200 bg-white'
+                    }`}
+                  >
+                    <div className="flex-1 min-w-0 mb-2 md:mb-0">
+                      <h4 className="font-bold text-indigo-700 break-words">
+                        {book.title}
+                      </h4>
+                      <p className="text-sm text-gray-600 break-words">
+                        by {book.author}
+                      </p>
+                      <p className="text-xs text-gray-500 break-words">
+                        ISBN: {book.isbn}
+                      </p>
                     </div>
-                  )
-                })}
-              </div>
+                    <div className="text-right">
+                      <p
+                        className={`text-sm font-medium ${
+                          isOverdue ? 'text-red-600' : 'text-gray-800'
+                        }`}
+                      >
+                        Due: {dueDate.toLocaleDateString()}
+                      </p>
+                      {isOverdue && (
+                        <p className="text-xs font-semibold text-red-600">
+                          Overdue!
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )
+              })
             ) : (
               <p className="text-gray-500">
                 You currently have no books issued.
@@ -282,7 +282,7 @@ export default function UserDashboard() {
               Search and explore all available books.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="break-words whitespace-normal max-w-full">
             <BookSearch />
           </CardContent>
         </Card>
