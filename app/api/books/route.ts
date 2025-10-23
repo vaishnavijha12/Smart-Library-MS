@@ -32,6 +32,7 @@ async function getHandler(request: NextRequest) {
       isbn: book.isbn,
       category: book.category,
       description: book.description,
+      imageUrl: book.imageUrl,
       quantity: totalCopies,
       available: availableCopies,
       copies: book.copies.map(copy => ({
@@ -45,7 +46,7 @@ async function getHandler(request: NextRequest) {
 }
 
 async function postHandler(request: NextRequest) {
-  const { title, author, isbn, category, description, quantity } = await request.json()
+  const { title, author, isbn, category, description, imageUrl, quantity } = await request.json()
 
   if (!title || !author || !isbn || !category) {
     return Response.json({ error: 'Missing required fields' }, { status: 400 })
@@ -60,6 +61,7 @@ async function postHandler(request: NextRequest) {
         isbn,
         category,
         description,
+        imageUrl,
       },
     })
 

@@ -11,13 +11,24 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'm.media-amazon.com',
+        port: '',
+        pathname: '/**', // allow all paths
+      },
+      {
+        protocol: 'https',
         hostname: 'images.unsplash.com',
         port: '',
         pathname: '/**', // allow all paths
       },
     ],
   },
-  /* config options here */
+  reactStrictMode: true,
+  swcMinify: true,
+  experimental: {
+    // keep the edge-runtime/esm optimizations available for newer Next versions
+    esmExternals: 'loose',
+  },
 };
 
 export default nextConfig;
