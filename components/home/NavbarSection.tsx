@@ -5,6 +5,7 @@ import {BookOpenText,User} from 'lucide-react'
 import {useEffect,useState} from 'react'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 interface User {
   id: string
@@ -78,7 +79,7 @@ export default function NavbarSection(){
               <BookOpenText className="w-8 h-8 text-purple-400" />
               <Link
                 href="/"
-                className="text-black text-2xl font-bold tracking-tight group-hover:opacity-60 transition-colors duration-300"
+                className="text-foreground text-2xl font-bold tracking-tight group-hover:opacity-60 transition-colors duration-300"
               >
                 LibraryMS
               </Link>
@@ -87,13 +88,13 @@ export default function NavbarSection(){
               <div className="hidden md:flex items-center space-x-6">
                 <button
                   onClick={() => scrollToSection('features')}
-                  className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300"
+                  className="text-muted-foreground hover:text-primary font-medium transition-colors duration-300"
                 >
                   Features
                 </button>
                 <button
                   onClick={() => scrollToSection('faq')}
-                  className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300"
+                  className="text-muted-foreground hover:text-primary font-medium transition-colors duration-300"
                 >
                   FAQ
                 </button>
@@ -102,6 +103,7 @@ export default function NavbarSection(){
           </div>
           {(user === null) ?
           (<div className="flex items-center space-x-4">
+            <ThemeToggle />
             <Link
               href="/auth/login"
               className="text-white bg-indigo-600 px-5 py-2.5 rounded-lg hover:bg-indigo-500 transition-all duration-300 inline-block"
@@ -118,8 +120,9 @@ export default function NavbarSection(){
           :
           (
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-black">
-              <User className=" text-gray-500 h-5 w-5" />
+            <ThemeToggle />
+            <div className="flex items-center space-x-2 text-foreground">
+              <User className=" text-muted-foreground h-5 w-5" />
               <span className="text-md font-medium">{user.name}</span>
             </div>
             {(user.role === "USER") ?
@@ -163,7 +166,7 @@ export default function NavbarSection(){
             
             <Button
               onClick={logoutHandler}
-              className="text-black bg-gray-200 px-5.5 text-md  py-5.5 rounded-lg hover:bg-indigo-400 hover:text-white   transition-all duration-300 "
+              className="text-foreground bg-secondary px-5.5 text-md  py-5.5 rounded-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 "
             >
               Logout
             </Button>

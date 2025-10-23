@@ -46,7 +46,7 @@ export function BookSearch() {
   return (
     <div className="space-y-6">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
         <Input
           placeholder="Search books by title, author, or category..."
           value={search}
@@ -57,10 +57,10 @@ export function BookSearch() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {books.map((book) => (
-          <Card key={book.id} className="hover:shadow-lg transition-shadow">
+          <Card key={book.id} className="hover:shadow-lg transition-shadow bg-card">
             <CardHeader>
-              <CardTitle className="text-lg font-bold text-indigo-800">{book.title}</CardTitle>
-              <CardDescription>by {book.author}</CardDescription>
+              <CardTitle className="text-lg font-bold text-foreground">{book.title}</CardTitle>
+              <CardDescription className="text-muted-foreground">by {book.author}</CardDescription>
             </CardHeader>
             {book.imageUrl && (
               <div className="px-6 pb-4">
@@ -79,13 +79,13 @@ export function BookSearch() {
             <CardContent>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Book className="h-4 w-4 text-gray-500" />
-                  <span className="text-sm text-gray-600">ISBN: {book.isbn}</span>
+                  <Book className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">ISBN: {book.isbn}</span>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Badge variant="secondary" className="bg-blue-100 text-blue-800 break-words whitespace-normal max-w-full">{book.category}</Badge>
+                  <Badge variant="secondary" className="break-words whitespace-normal max-w-full">{book.category}</Badge>
                   {book.description && (
-                    <Badge variant="secondary" className="bg-blue-100 text-blue-800 break-words whitespace-normal max-w-full">{book.description}</Badge>
+                    <Badge variant="secondary" className="break-words whitespace-normal max-w-full">{book.description}</Badge>
                   )}
                 </div>
               </div>
@@ -96,8 +96,8 @@ export function BookSearch() {
 
       {books.length === 0 && !loading && (
         <div className="text-center py-8">
-          <Book className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-500">No books found</p>
+          <Book className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <p className="text-muted-foreground">No books found</p>
         </div>
       )}
     </div>
