@@ -3,9 +3,6 @@ import NavbarSection from '@/components/home/NavbarSection'
 import FeatureSection from '@/components/home/FeatureSection'
 import QuoteSection from '@/components/home/QuoteSection'
 import FAQSection from '@/components/home/FAQSection'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { verifyToken } from '@/lib/auth'
 
 export default async function Home() {
   return (
